@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Klantenoverzicht</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+            		<h1>Klanten</h1>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Naam</th>
+								<th>Email</th>
+								<th>Adres</th>
+								<th>Telefoonnummer</th>
+								<th>Omschrijving</th>
+								<th>Projecten</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="klant : ${klanten}">
+								<td th:text="${klant.naam}"></td>
+								<td th:text="${klant.email}"></td>
+								<td th:text="${klant.adres.straat + ' ' + klant.adres.huisNummer + ', ' + klant.adres.postcode + ' ' + klant.adres.gemeente}"></td>
+								<td th:text="${klant.telefoonNummer}"></td>
+								<td th:text="${klant.omschrijving}"></td>
+								<td>
+									<span th:each="project,iterStat : ${klant.projecten}">
+				    					<span th:text="${project.naam}"></span>
+				    					<th:block th:if="${!iterStat.last}">,</th:block>
+				    				</span>
+								</td>
+								<td>
+							    	<a th:href="@{/klant/{id}(id=${klant.id})}">Bewerk</a>
+						    	</td>
+						    	<td>
+							    	<a th:href="@{/verwijderKlant/{id}(id=${klant.id})}">Verwijder</a>
+						    	</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+        		<a th:href="klant">Creëer nieuwe klant</a>
+        	</div>
+        	<div class="row">
+        		<a th:href="beginscherm">Naar beginscherm</a>
+        	</div>
+		</div>
+	</div>
+</body>
+</html>

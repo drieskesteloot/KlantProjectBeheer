@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Projectenoverzicht</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+            		<h1>Projecten</h1>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Naam</th>
+								<th>Klant</th>
+								<th>Contactpersoon klant</th>
+								<th>Prijs</th>
+								<th>Type project</th>
+								<th>Status</th>
+								<th>Startdatum</th>
+								<th>Einddatum</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="project : ${projecten}">
+								<td th:text="${project.naam}"></td>
+								<td th:text="${project.klant.naam}"></td>
+								<td th:text="${project.contactPersoonKlant}"></td>
+								<td th:text="${project.prijs}"></td>
+								<td th:text="${project.typeProject.naam}"></td>
+								<td th:text="${project.status.naam}"></td>
+								<td th:text="${project.startDatum}"></td>
+								<td th:text="${project.eindDatum}"></td>
+								<td>
+							    	<a th:href="@{/project/{id}(id=${project.id})}">Bewerk</a>
+						    	</td>
+						    	<td>
+							    	<a th:href="@{/verwijderProject/{id}(id=${project.id})}">Verwijder</a>
+						    	</td>
+						    </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+        		<a th:href="project">Creëer nieuw project</a>
+        	</div>
+        	<div class="row">
+        		<a th:href="beginscherm">Naar beginscherm</a>
+        	</div>
+		</div>
+	</div>
+</body>
+</html>

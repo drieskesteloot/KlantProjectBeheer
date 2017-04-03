@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Gebruikers database - Creëer</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+     		<div class="row">
+          		<div class="col-lg-6 col-md-7 col-sm-6">
+            		<h1>Creëer een nieuwe gebruiker</h1>
+					<form th:action="@{/gebruiker}" method="post" th:object="${gebruiker}" class="form-horizontal">
+						<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+						    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
+						</div>
+            			<fieldset>
+	            			<div class="form-group">
+			                    <label class="col-lg-3 control-label">Voornaam:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="text" class="form-control" th:field="*{voornaam}" name="voornaam" autofocus="autofocus"/>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Naam:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="naam" class="form-control" th:field="*{naam}" name="naam"/>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">E-mailadres:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="email" class="form-control" th:field="*{email}" name="email"/>
+			                    </div>
+	                		</div>
+	                	    <div class="form-group">
+			                    <label class="col-lg-3 control-label">Wachtwoord:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="password" class="form-control" th:field="*{wachtwoord}" name="wachtwoord"/>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Herhaal wachtwoord:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="password" class="form-control" th:field="*{wachtwoordHerhaald}" name="wachtwoordHerhaald"/>
+			                    </div>
+	                		</div>
+	                		<!-- 
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Rol:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="text" class="form-control" th:field="*{adres.postcode}" name="postcode"/>
+			                    </div>
+	                		</div>
+	                		 -->
+	                		<div class="form-group">
+                				<div class="col-lg-12 col-lg-offset-3">
+                					<button type="submit" class="btn btn-primary" name="button">Creëer</button>
+                				</div>
+                			</div>
+            			</fieldset>
+            		</form>
+            	</div>
+            </div>
+            <div class="row">
+        		<a th:href="gebruikers">Gebruikers overzicht</a>
+        	</div> 
+        	<div class="row">
+        		<a th:href="beginscherm">Naar beginscherm</a>
+        	</div>
+		</div>
+	</div>
+</body>
+</html>

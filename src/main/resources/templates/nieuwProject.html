@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Projecten database - Creëer</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script> 
+	<script type="text/javascript">
+		$(function() {
+	        $("#startdate").datepicker({ dateFormat: "yy-mm-dd" })
+	        $("#enddate").datepicker({ dateFormat: "yy-mm-dd" })
+		});
+	</script> 
+		
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+     		<div class="row">
+          		<div class="col-lg-6 col-md-7 col-sm-6">
+            		<h1>Creëer een nieuw project</h1>
+					<!-- enctype="multipart/form-data" -->
+					<form th:action="@{/project}" method="post" th:object="${project}" class="form-horizontal">
+            			<fieldset>
+	            			<div class="form-group">
+			                    <label class="col-lg-3 control-label">Naam:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="text" class="form-control" th:field="*{naam}" name="naam" autofocus="autofocus"/>
+			                    	<p th:if="${#fields.hasErrors('naam')}" th:errors="*{naam}" class="alert alert-danger">Fout in de naam</p>
+			                    </div>
+	                		</div>
+	                		
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Type project:</label>
+			                    <div class="col-lg-9">
+		                			<select name="typeProject" class="form-control" th:field="*{typeProject}">
+		                				<option th:value="0" ></option>
+										<option th:each="typeProject : ${typeprojecten}" 
+											th:value="${typeProject.id}" 
+											th:text="${typeProject.naam}"></option>
+									</select>
+									<p th:if="${#fields.hasErrors('typeProject')}" th:errors="*{typeProject}" class="alert alert-danger">Fout in typeproject</p>
+								</div>
+	                		</div>
+	                		
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Prijs:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="number" class="form-control" th:field="*{prijs}" name="prijs" step="any"/>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Startdatum:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="date" class="form-control" id="startdate" th:field="*{startDatum}" name="startDatum" size="30"/>
+			                    	<p th:if="${#fields.hasErrors('startDatum')}" th:errors="*{startDatum}" class="alert alert-danger">Fout in de startdatum</p>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Einddatum:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="date" class="form-control" id="enddate" th:field="*{eindDatum}" name="eindDatum" size="30"/>
+			                    	<p th:if="${#fields.hasErrors('eindDatum')}" th:errors="*{eindDatum}" class="alert alert-danger">Fout in de einddatum</p>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Klant:</label>
+			                    <div class="col-lg-9">
+		                			<select name="klant" class="form-control" th:field="*{klant}">
+		                				<option th:value="0" ></option>
+										<option th:each="klant : ${klanten}"
+											th:value="${klant.id}"
+											th:text="${klant.naam}"></option>
+									</select>
+									<p th:if="${#fields.hasErrors('klant')}" th:errors="*{klant}" class="alert alert-danger">Fout in klant</p>
+								</div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label">Contactpersoon:</label>
+			                    <div class="col-lg-9">
+			                    	<input type="text" class="form-control" th:field="*{contactPersoonKlant}" name="contactPersoon"/>
+			                    	<p th:if="${#fields.hasErrors('contactPersoonKlant')}" th:errors="*{contactPersoonKlant}" class="alert alert-danger">Fout in de contactpersoon</p>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+                				<div class="col-lg-12 col-lg-offset-3">
+                					<button type="submit" class="btn btn-primary" name="button">Creëer</button>
+                				</div>
+                			</div>
+	                	</fieldset>
+	                </form>
+				</div>
+			</div>
+			<div class="row">
+        		<a th:href="projecten">Projecten overzicht</a>
+        	</div>
+        	<div class="row">
+        		<a th:href="beginscherm">Naar beginscherm</a>
+        	</div>
+		</div>
+	</div>
+</body>
+</html>

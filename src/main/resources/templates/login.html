@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Login pagina</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header" id="banner">
+			<div class="row">
+				<div class="col-lg-8 col-md-7 col-sm-6" style="width: 100%; height: 100vh; position: relative; text-align: center;">
+					<h1>Login</h1>
+					<p th:if="${loginError}" class="error">Verkeerd e-mailadres of wachtwoord</p>
+					<form th:action="@{/login}" method="post">
+						<fieldset>
+							<!-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
+							<label>Inloggen kan met john.doe@test.com/Test</label> <br /> 
+							<label for="email">E-mailadres</label>:
+							<input type="text" id="email" name="email" autofocus="autofocus"/> <br />
+							<label for="password">Wachtwoord</label>:
+							<input type="password" id="password" name="password"/> <br />
+							<label for="remember-me">Remember me</label>:
+							<input type="checkbox" name="remember-me" id="remember-me"/> <br />
+							<input type="submit" class="btn btn-primary" value="Inloggen" />
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
