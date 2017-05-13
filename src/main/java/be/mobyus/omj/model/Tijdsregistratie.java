@@ -1,37 +1,45 @@
 package be.mobyus.omj.model;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Tijdsregistratie {
+	
+	//private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@NotEmpty
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date datum;
 	
-	@NotEmpty
 	private Integer aantalUren;
-	
-	@NotEmpty
-	@ManyToMany
-	private List<Gebruiker> gebruikers;
-	
-	@NotEmpty
 	private String omschrijving;
+	private Boolean gevalideerd;
+	private Boolean rejected;
+	private Boolean submitted;
+
+	@ManyToOne
+	@JsonBackReference
+	private Gebruiker gebruiker;
+
+	@ManyToOne
+	@JsonBackReference
+	private Project project;
 
 	public long getId() {
 		return id;
@@ -57,14 +65,6 @@ public class Tijdsregistratie {
 		this.aantalUren = aantalUren;
 	}
 
-	public List<Gebruiker> getGebruikers() {
-		return gebruikers;
-	}
-
-	public void setGebruikers(List<Gebruiker> gebruikers) {
-		this.gebruikers = gebruikers;
-	}
-
 	public String getOmschrijving() {
 		return omschrijving;
 	}
@@ -72,5 +72,54 @@ public class Tijdsregistratie {
 	public void setOmschrijving(String omschrijving) {
 		this.omschrijving = omschrijving;
 	}
+	
+	public Boolean getGevalideerd() {
+		return gevalideerd;
+	}
+
+	public void setGevalideerd(Boolean gevalideerd) {
+		this.gevalideerd = gevalideerd;
+	}
+
+	public Boolean getRejected() {
+		return rejected;
+	}
+
+	public void setRejected(Boolean rejected) {
+		this.rejected = rejected;
+	}
+
+	public Boolean getSubmitted() {
+		return submitted;
+	}
+
+	public void setSubmitted(Boolean submitted) {
+		this.submitted = submitted;
+	}
+
+	public Gebruiker getGebruiker() {
+		return gebruiker;
+	}
+
+	public void setGebruiker(Gebruiker gebruiker) {
+		this.gebruiker = gebruiker;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	@Override
+	public String toString() {
+		return "Tijdsregistratie [id=" + id + ", datum=" + datum + ", aantalUren=" + aantalUren + ", omschrijving="
+				+ omschrijving + ", gevalideerd=" + gevalideerd + ", rejected=" + rejected + ", submitted=" + submitted
+				+ ", gebruiker=" + gebruiker + ", project=" + project + "]";
+	}
+	
+	
 
 }

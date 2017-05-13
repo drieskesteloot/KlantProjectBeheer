@@ -1,10 +1,16 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head> 
     <title>Startpagina klanten- projectenbeheer</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/rejected.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -13,9 +19,16 @@
           <div class="col-lg-8 col-md-7 col-sm-6" style="width: 100%; height: 100vh; position: relative; 
           text-align: center;">
             <h1>Maak een keuze</h1>
-            <a href="klanten" class="btn btn-primary">Klanten</a>
-            <a href="projecten" class="btn btn-primary">Projecten</a>
-            <a href="gebruikers" class="btn btn-primary">Gebruikers</a>
+            <a sec:authorize="hasAuthority('ADMIN')" href="klanten" class="btn btn-primary" th:text="#{msg.klanten}" style="margin-top: 16px"></a>
+            <a sec:authorize="hasAuthority('ADMIN')" href="projecten" class="btn btn-primary" th:text="#{msg.projecten}" style="margin-top: 16px"></a>
+            <a sec:authorize="hasAuthority('ADMIN')" href="gebruikers" class="btn btn-primary" th:text="#{msg.gebruikers}" style="margin-top: 16px"></a>
+           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnProjecten}" style="margin-top: 16px"></a>
+           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnTijdregistraties}" style="margin-top: 16px"></a>
+           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnKlanten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnKlanten}" style="margin-top: 16px"></a>
+           	<a th:if="${huidigeGebruiker == null}" href="login" class="btn btn-primary" th:text="#{msg.inLoggen}" style="margin-top: 16px"></a>
+          	<form th:if="${huidigeGebruiker}" th:action="@{/logout}" method="post" style="margin-top: 16px">
+	    		<button class="btn btn-primary" type="submit" th:text="#{msg.uitLoggen}"></button>
+			</form>
           </div>
         </div>
       </div>

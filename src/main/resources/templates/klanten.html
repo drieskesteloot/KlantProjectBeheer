@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head> 
-    <title>Klantenoverzicht</title> 
+    <title th:text="#{msg.klanten.overzicht}"></title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
@@ -11,17 +11,17 @@
     	<div class="page-header" id="banner">
         	<div class="row">
           		<div class="col-lg-8 col-md-7 col-sm-6">
-            		<h1>Klanten</h1>
+            		<h1 th:text="#{msg.klanten}"></h1>
 
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Naam</th>
-								<th>Email</th>
-								<th>Adres</th>
-								<th>Telefoonnummer</th>
-								<th>Omschrijving</th>
-								<th>Projecten</th>
+								<th th:text="#{msg.klant.naam}"></th>
+								<th th:text="#{msg.klant.email}"></th>
+								<th th:text="#{msg.klant.adres}"></th>
+								<th th:text="#{msg.klant.telefoonnummer}"></th>
+								<th th:text="#{msg.klant.omschrijving}"></th>
+								<th th:text="#{msg.klant.projecten}"></th>
 								<th></th>
 								<th></th>
 							</tr>
@@ -40,10 +40,10 @@
 				    				</span>
 								</td>
 								<td>
-							    	<a th:href="@{/klant/{id}(id=${klant.id})}">Bewerk</a>
+							    	<a th:href="@{/klant/{id}(id=${klant.id})}" th:text="#{msg.bewerk}"></a>
 						    	</td>
 						    	<td>
-							    	<a th:href="@{/verwijderKlant/{id}(id=${klant.id})}">Verwijder</a>
+							    	<a th:href="@{/verwijderKlant/{id}(id=${klant.id})}" th:text="#{msg.verwijder}"></a>
 						    	</td>
 							</tr>
 						</tbody>
@@ -51,10 +51,10 @@
 				</div>
 			</div>
 			<div class="row">
-        		<a th:href="klant">Creëer nieuwe klant</a>
+        		<a th:href="klant" th:text="#{msg.klant.creeerNieuweKlant}"></a>
         	</div>
         	<div class="row">
-        		<a th:href="beginscherm">Naar beginscherm</a>
+        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
 		</div>
 	</div>

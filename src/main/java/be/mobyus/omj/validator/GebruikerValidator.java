@@ -13,7 +13,7 @@ public class GebruikerValidator implements Validator {
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Klant.class.isAssignableFrom(clazz);
+		return Gebruiker.class.isAssignableFrom(clazz);
 	}
 	
 	@Override
@@ -23,6 +23,7 @@ public class GebruikerValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "naam", "gebruiker.naam");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "naam", "gebruiker.voornaam");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "gebruiker.email");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "rol", "gebruiker.rol");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "wachtwoord", "gebruiker.wachtwoord");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "wachtwoordHerhaald", "gebruiker.wachtwoord");
 		

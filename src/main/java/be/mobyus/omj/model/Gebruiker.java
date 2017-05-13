@@ -1,7 +1,9 @@
 package be.mobyus.omj.model;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,8 +18,12 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Gebruiker {
+	
+	//private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -38,10 +44,12 @@ public class Gebruiker {
 	@Enumerated(EnumType.STRING)
 	private Rol rol;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy="gebruikers", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Project> projecten;
 	
-	@ManyToMany
+	@OneToMany(mappedBy="gebruiker")
+	@JsonManagedReference
 	private List<Tijdsregistratie> tijdsRegistraties;
 	
 	public long getId() {
@@ -115,6 +123,13 @@ public class Gebruiker {
 	public void setTijdsRegistraties(List<Tijdsregistratie> tijdsRegistraties) {
 		this.tijdsRegistraties = tijdsRegistraties;
 	}
+
+	@Override
+	public String toString() {
+		return "Gebruiker [id=" + id + ", voornaam=" + voornaam + ", naam=" + naam + ", rol=" + rol + "]";
+	}
+	
+	
 	
 
 }

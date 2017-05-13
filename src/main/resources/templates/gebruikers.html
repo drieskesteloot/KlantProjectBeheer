@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head> 
-    <title>Gebruikersoverzicht</title> 
+    <title th:text="#{msg.gebruiker.overzicht}"></title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
@@ -11,25 +11,25 @@
     	<div class="page-header" id="banner">
         	<div class="row">
           		<div class="col-lg-8 col-md-7 col-sm-6">
-            		<h1>Gebruikers</h1>
+            		<h1 th:text="#{msg.gebruikers}"></h1>
 
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Naam</th>
-								<th>Voornaam</th>
-								<th>Email</th>
+								<th th:text="#{msg.gebruiker.voornaam}"></th>
+								<th th:text="#{msg.gebruiker.naam}"></th>
+								<th th:text="#{msg.gebruiker.email}"></th>
 								<th th:text="#{msg.gebruiker.wachtwoord}"></th>
-								<th>Rol</th>
-								<th>Projecten</th>
+								<th th:text="#{msg.gebruiker.rol}"></th>
+								<th th:text="#{msg.gebruiker.projecten}"></th>
 								<th></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="gebruiker : ${gebruikers}">
-								<td th:text="${gebruiker.naam}"></td>
 								<td th:text="${gebruiker.voornaam}"></td>
+								<td th:text="${gebruiker.naam}"></td>
 								<td th:text="${gebruiker.email}"></td>
 								<td th:text="${gebruiker.wachtwoord}"></td>
 								<td th:text="${gebruiker.rol}"></td>
@@ -40,10 +40,10 @@
 				    				</span>
 								</td>
 								<td>
-							    	<a th:href="@{/gebruiker/{id}(id=${gebruiker.id})}">Bewerk</a>
+							    	<a th:href="@{/gebruiker/{id}(id=${gebruiker.id})}" th:text="#{msg.bewerk}">Bewerk</a>
 						    	</td>
 						    	<td>
-							    	<a th:href="@{/verwijderGebruiker/{id}(id=${gebruiker.id})}">Verwijder</a>
+							    	<!-- <a th:href="@{/verwijderGebruiker/{id}(id=${gebruiker.id})}" th:text="#{msg.verwijder}">Verwijder</a> -->
 						    	</td>
 							</tr>
 						</tbody>
@@ -51,10 +51,10 @@
 				</div>
 			</div>
 			<div class="row">
-        		<a th:href="gebruiker">Creëer nieuwe gebruiker</a>
+        		<a th:href="gebruiker" th:text="#{msg.gebruiker.creeerNieuweGebruiker}"></a>
         	</div>
         	<div class="row">
-        		<a th:href="beginscherm">Naar beginscherm</a>
+        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
 		</div>
 	</div>

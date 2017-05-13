@@ -1,8 +1,11 @@
 package be.mobyus.omj.service.huidigeGebruiker;
 
+import org.springframework.stereotype.Service;
+
 import be.mobyus.omj.model.HuidigeGebruiker;
 import be.mobyus.omj.model.Rol;
 
+@Service
 public class HuidigeGebruikerServiceImpl implements HuidigeGebruikerService {
 	
 	@Override

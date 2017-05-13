@@ -30,26 +30,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
                 .antMatchers("/", "/public/**").permitAll()
+                //.antMatchers("/gebruikers/**").hasAuthority("ADMIN")
+                //.anyRequest().fullyAuthenticated()
+				//.antMatchers("/resources/**").permitAll()
+				//.anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login.html")
-                .failureUrl("/error.html")
+                .loginPage("/login")
+                //.defaultSuccessUrl("/klantprojectbeheer",false)
+                .failureUrl("/login?error")
                 .usernameParameter("email")
-                .passwordParameter("password")
+                //.passwordParameter("password")
                 .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .deleteCookies("remember-me")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login")
                 .permitAll()
                 .and()
                 .rememberMe()
 				.and()
 		        .authorizeRequests().antMatchers("/console/**").permitAll();
-		
+		/*
 		http.csrf().disable();
         http.headers().frameOptions().disable();
+        */
     }
 	
 }

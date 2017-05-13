@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.User;
 
 public class HuidigeGebruiker extends User {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private Gebruiker gebruiker;
 	
 	public HuidigeGebruiker(Gebruiker gebruiker){

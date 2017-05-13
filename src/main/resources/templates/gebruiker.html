@@ -1,10 +1,157 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+    <title th:text="#{msg.gebruiker}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 </head>
 <body>
-<h1>Bewerk gebruiker</h1>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+		            <h1 th:text="#{msg.gebruiker}"></h1>           
+		            <form class="form-horizontal" th:action="@{/gebruiker/{id}(id=${gebruiker.id})}" th:object="${gebruiker}" method="post" enctype="multipart/form-data" >
+						<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+						    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
+						</div>
+						<fieldset>
+							<div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.voornaam} + ':'"></label>
+			                    <div class="col-lg-6">
+			                    	<input type="text" class="form-control" th:value="${gebruiker.voornaam}" th:field="*{voornaam}"/>
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.naam} + ':'"></label>
+			                    <div class="col-lg-6">
+			                    	<input type="text" class="form-control" th:value="${gebruiker.naam}" th:field="*{naam}"/>
+			                    </div>
+			                </div>
+			                <div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.email} + ':'"></label>
+			                    <div class="col-lg-6">
+			                    	<input type="email" class="form-control" th:value="${gebruiker.email}" th:field="*{email}"/>
+			                    </div>
+			                </div>
+			                
+			                <div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.rol} + ':'"></label>
+			                    <div class="col-lg-6">
+			                    	<select name="rol" class="form-control" th:field="*{rol}">
+			                    	<option th:value="0" ></option>
+									<option th:each="rol : ${T(be.mobyus.omj.model.Rol).values()}" 
+										th:value="${rol}" 
+										th:text="${rol}"
+										th:selected="${gebruiker.rol}">
+									</option>
+									</select>
+			                    </div>
+	                		</div>
+	                		
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.wachtwoordWijzigen} + ':'"></label>
+			                    <div class="col-lg-1">
+			                    	<input type="checkbox" class="form-control" id="ch_wachtwoordWijzigen"/>
+			                    </div>
+			                </div>
+	                		
+	                		<div class="form-group" id="nieuwWachtwoord">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.nieuwWachtwoord} + ':'"></label>
+			                    <div class="col-lg-6">
+			                    	<input type="password" class="form-control" name="wachtwoord" th:value="${gebruiker.wachtwoord}"/>
+			                    </div>
+			                </div>
+			                <div class="form-group" id="wachtwoordHerhalen">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.herhaalWachtwoord} + ':'"></label>
+			                    <div class="col-lg-6">
+			                    	<input type="password" class="form-control" name="wachtwoordHerhaald" th:value="${gebruiker.wachtwoord}"/>
+			                    </div>
+			                </div>
+	                		
+	                		
+	                		<!-- 
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.projecten} + ':'"></label>
+			                    <div class="col-lg-9">
+		                			<select name="project" class="form-control" th:field="*{projecten}">
+		                				<option th:value="0" ></option>
+										<option th:each="project : ${projecten}"
+											th:value="${project.id}"
+											th:text="${project.naam}"></option>
+									</select>
+									<p th:if="${#fields.hasErrors('klant')}" th:errors="*{klant}" class="alert alert-danger">Fout in klant</p>
+								</div>
+	                		</div>
+	                		
+			                <div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.projecten} + ':'"></label>
+			                    <div class="col-lg-10">
+									<div th:each="project : ${gebruiker.projecten}">
+										<span th:text="${project.naam}"></span>
+									</div>
+			                    </div>
+			                </div>
+		            		
+		            		<div class="form-group">
+					             <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.projecten} + ':'"></label>
+					             <div class="col-lg-6">
+					             	<div class="input-group">
+					                	<select name="project" class="form-control" th:field="*{project}">
+					                		<option th:value="0" ></option>
+											<option th:each="project : ${projecten}"
+													th:value="${project.id}"
+													th:text="${project.naam}"></option>
+										</select>
+										<p th:if="${#fields.hasErrors('klant')}" th:errors="*{klant}" class="alert alert-danger">Fout in klant</p>
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-primary" th:text="#{msg.gebruiker.projectToevoegen}"></button>
+										</span>
+									</div>
+								</div>
+			                </div>
+			                -->
+			                <div class="form-group">
+                				<div class="col-lg-12 col-lg-offset-3">
+                					<button type="submit" class="btn btn-primary" name="button" th:text="#{msg.bewaar}"></button>
+                				</div>
+                			</div>
+			                
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+        		<a th:href="@{/gebruikers}" th:text="#{msg.gebruiker.overzicht}"></a>
+        	</div> 
+        	<div class="row">
+        		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
+        	</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(function() {
+		$('#nieuwWachtwoord').hide();
+		$('#wachtwoordHerhalen').hide();
+		
+		
+		$('#ch_wachtwoordWijzigen').change(function(){
+			  if($(this).prop("checked")) {
+			    $('#nieuwWachtwoord').show();
+			    $('#wachtwoordHerhalen').show();
+			  } else {
+			    $('#nieuwWachtwoord').hide();
+			    $('#wachtwoordHerhalen').hide();
+			  }
+		});
+
+	});
+	</script>
+	
 </body>
 </html>

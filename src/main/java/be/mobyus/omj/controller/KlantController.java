@@ -3,6 +3,7 @@ package be.mobyus.omj.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,18 +29,21 @@ public class KlantController {
 	@Autowired
 	ProjectRepository projectrepo;
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/klanten",method=RequestMethod.GET)
 	public String klantenList(Model model) {
         model.addAttribute("klanten", klantrepo.findAll());
         return "klanten";
 	}
     
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/klant",method=RequestMethod.GET)
 	public String klantNew(Model model) {
 		model.addAttribute("klant", new Klant());
 		return "nieuweklant";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/klant",method=RequestMethod.POST)
 	public String klantenAdd(@Valid @ModelAttribute Klant klant, BindingResult result , Model model) {
 
@@ -80,12 +84,14 @@ public class KlantController {
 	}
 	*/
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping("/klant/{id}")
 	public String klantDetails(@PathVariable Long id, Model model) {
         model.addAttribute("klant", klantrepo.findOne(id));
         return "klant";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/klant/{id}", method=RequestMethod.POST)
 	public String updateKlantDetails(@PathVariable Long id, @Valid @ModelAttribute Klant klant,
 			BindingResult result, Model model) {
@@ -101,6 +107,7 @@ public class KlantController {
         return "redirect:/klant/" + klant.getId();
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/verwijderKlant/{id}", method=RequestMethod.GET)
 	public String klantDelete(@PathVariable Long id, Model model) {
         klantrepo.delete(id);

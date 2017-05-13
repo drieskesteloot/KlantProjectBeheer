@@ -1,5 +1,6 @@
 package be.mobyus.omj.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Status {
+public class Status implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -42,5 +45,12 @@ public class Status {
 	public void setNaam(String naam) {
 		this.naam = naam;
 	}
+
+	@Override
+	public String toString() {
+		return "Status [id=" + id + ", naam=" + naam + "]";
+	}
+	
+	
 
 }

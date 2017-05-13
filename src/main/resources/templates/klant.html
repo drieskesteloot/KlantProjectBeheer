@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Klant</title>
+    <title th:text="#{msg.klant}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
@@ -11,68 +11,68 @@
     	<div class="page-header" id="banner">
         	<div class="row">
           		<div class="col-lg-8 col-md-7 col-sm-6">
-		            <h1>Klant</h1>            
+		            <h1 th:text="#{msg.klant}"></h1>            
 		            <form class="form-horizontal" th:action="@{/klant/{id}(id=${klant.id})}" th:object="${klant}" method="post" enctype="multipart/form-data" >
 						<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
 						    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
 						</div>
 						<fieldset>
 		            		<div class="form-group">
-			                    <label class="col-lg-3 control-label">Naam:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.naam} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.naam}" th:field="*{naam}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">E-mail:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.email} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="email" class="form-control" th:value="${klant.email}" th:field="*{email}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Straat:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.straat} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.adres.straat}" th:field="*{adres.straat}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Huisnummer:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.huisnummer} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.adres.huisNummer}" th:field="*{adres.huisNummer}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Bus:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.bus} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.adres.bus}" th:field="*{adres.bus}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Postcode:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.postcode} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.adres.postcode}" th:field="*{adres.postcode}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Gemeente:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.gemeente} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.adres.gemeente}" th:field="*{adres.gemeente}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Telefoonnummer:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.telefoonnummer} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.telefoonNummer}" th:field="*{telefoonNummer}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Omschrijving:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.omschrijving} + ':'"></label>
 			                    <div class="col-lg-6">
 			                    	<input type="text" class="form-control" th:value="${klant.omschrijving}" th:field="*{omschrijving}"/>
 			                    </div>
 		                	</div>
 		                	<div class="form-group">
-			                    <label class="col-lg-3 control-label">Projecten:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.klant.projecten} + ':'"></label>
 			                    <div class="col-lg-6">
 									<div th:each="project : ${klant.projecten}">
 										<!--<input type="text" class="form-control" th:value="${project.naam}" disabled="disabled"/> -->
@@ -82,8 +82,8 @@
 			                </div>
 		                	<div class="form-group">
                 				<div class="col-lg-12 col-lg-offset-3">
-                					<button type="submit" class="btn btn-primary" name="button">Bewaar</button>
-                					<a th:href="@{/project}" class="btn btn-primary">Creëer nieuw project</a>
+                					<button type="submit" class="btn btn-primary" name="button" th:text="#{msg.bewaar}"></button>
+                					<a th:href="@{/project}" class="btn btn-primary" th:text="#{msg.project.creeerNieuwProject}"></a>
                 				</div>
                 			</div>
 		                </fieldset>
@@ -91,10 +91,10 @@
 				</div>
 			</div>
 			<div class="row">
-        		<a th:href="@{/klanten}">Klanten overzicht</a>
+        		<a th:href="@{/klanten}" th:text="#{msg.klanten.overzicht}"></a>
         	</div> 
         	<div class="row">
-        		<a th:href="@{/beginscherm}">Naar beginscherm</a>
+        		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
 		</div>
 	</div>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title th:text="#{msg.tijdsregistratie.overzicht}"></title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+            		<h1 th:text="#{msg.tijdsregistraties}"></h1>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th th:text="#{msg.tijdsregistratie.gebruiker}"></th>
+								<th th:text="#{msg.tijdsregistratie.project}"></th>
+								<th th:text="#{msg.tijdsregistratie.datum}"></th>
+								<th th:text="#{msg.tijdsregistratie.omschrijving}"></th>
+								<th th:text="#{msg.tijdsregistratie.aantalUren}"></th>
+								<th th:text="#{msg.tijdsregistratie.submitted}"></th>
+								<th th:text="#{msg.tijdsregistratie.validated}"></th>
+								<th th:text="#{msg.tijdsregistratie.rejected}"></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tijdsregistratie : ${tijdsregistraties}">
+								<td th:text="${tijdsregistratie.gebruiker.voornaam + ' ' + tijdsregistratie.gebruiker.naam}"></td>
+								<td th:text="${tijdsregistratie.project.naam}"></td>
+								<td th:text="${tijdsregistratie.datum}"></td>
+								<td th:text="${tijdsregistratie.omschrijving}"></td>
+								<td th:text="${tijdsregistratie.aantalUren}"></td>
+								<td th:switch="${tijdsregistratie.submitted}">
+								    <span th:case="true" th:text="#{messages.true}"></span>
+								    <span th:case="false" th:text="#{messages.false}"></span>
+								</td>
+								<td th:switch="${tijdsregistratie.gevalideerd}">
+								    <span th:case="true" th:text="#{messages.true}"></span>
+								    <span th:case="false" th:text="#{messages.false}"></span>
+								</td>
+								<td th:switch="${tijdsregistratie.rejected}">
+								    <span th:case="true" th:text="#{messages.true}"></span>
+								    <span th:case="false" th:text="#{messages.false}"></span>
+								</td>
+								<td>
+							    	<a th:href="@{/tijdsregistratie/{id}(id=${tijdsregistratie.id})}" th:text="#{msg.bewerk}"></a>
+						    	</td>
+						    	<td>
+							    	<!-- <a th:href="@{/verwijderProject/{id}(id=${project.id})}" th:text="#{msg.verwijder}"></a> -->
+						    	</td>
+						    </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<a th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnProjecten}"></a>
+			</div>
+        	<div class="row">
+        		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
+        	</div>
+        	
+		</div>
+	</div>
+</body>
+</html>

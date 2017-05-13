@@ -1,26 +1,35 @@
 package be.mobyus.omj.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Project {
+	
+	//private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
 	private String naam;
-
+	
 	@ManyToOne
 	private TypeProject typeProject;
 	
@@ -32,6 +41,7 @@ public class Project {
 	private Date eindDatum;
 	
 	@ManyToOne
+	@JsonBackReference
 	private Klant klant;
 
 	private String contactPersoonKlant;
@@ -40,7 +50,12 @@ public class Project {
 	private Status status;
 	
 	@ManyToMany
+	@JsonBackReference
 	private List<Gebruiker> gebruikers;
+	
+	@OneToMany(mappedBy="project")
+	@JsonManagedReference
+	private List<Tijdsregistratie> tijdsRegistraties;
 	
 	public Project(){}
 
@@ -104,7 +119,7 @@ public class Project {
 	public void setEindDatum(Date eindDatum) {
 		this.eindDatum = eindDatum;
 	}
-
+	
 	public Klant getKlant() {
 		return klant;
 	}
@@ -135,6 +150,21 @@ public class Project {
 
 	public void setGebruikers(List<Gebruiker> gebruikers) {
 		this.gebruikers = gebruikers;
+	}
+	
+	public List<Tijdsregistratie> getTijdsRegistraties() {
+		return tijdsRegistraties;
+	}
+
+	public void setTijdsRegistraties(List<Tijdsregistratie> tijdsRegistraties) {
+		this.tijdsRegistraties = tijdsRegistraties;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", naam=" + naam + ", typeProject=" + typeProject + ", prijs=" + prijs
+				+ ", startDatum=" + startDatum + ", eindDatum=" + eindDatum + ", klant=" + klant
+				+ ", contactPersoonKlant=" + contactPersoonKlant + ", status=" + status + "]";
 	}
 	
 	

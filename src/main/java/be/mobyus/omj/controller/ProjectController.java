@@ -1,12 +1,14 @@
 package be.mobyus.omj.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +23,11 @@ import be.mobyus.omj.dao.KlantRepository;
 import be.mobyus.omj.dao.ProjectRepository;
 import be.mobyus.omj.dao.StatusRepository;
 import be.mobyus.omj.dao.TypeProjectRepository;
+import be.mobyus.omj.model.Gebruiker;
 import be.mobyus.omj.model.Project;
+import be.mobyus.omj.model.Rol;
 import be.mobyus.omj.model.Status;
+import be.mobyus.omj.service.gebruiker.GebruikerService;
 import be.mobyus.omj.validator.ProjectValidator;
 
 @Controller
@@ -41,6 +46,9 @@ public class ProjectController {
 	KlantRepository klantrepo;
 	
 	@Autowired
+	GebruikerService gebruikerService;
+	
+	@Autowired
 	ProjectValidator projectValidator;
 	
 	@InitBinder("project")
@@ -50,12 +58,14 @@ public class ProjectController {
 	    binder.registerCustomEditor(Date.class, editor);
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value="/projecten",method=RequestMethod.GET)
 	public String projectenList(Model model) {
         model.addAttribute("projecten", projectrepo.findAll());
         return "projecten";
 	}
-    
+   
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/project",method=RequestMethod.GET)
 	public String projectNew(Model model) {
 		model.addAttribute("typeprojecten", typeprojectrepo.findAll());
@@ -64,6 +74,7 @@ public class ProjectController {
 		return "nieuwProject";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/project",method=RequestMethod.POST)
 	public String projectenAdd(@Valid @ModelAttribute Project project, BindingResult result, Model model) {
 		
@@ -115,6 +126,7 @@ public class ProjectController {
 	}
     */
     
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping("/project/{id}")
 	public String projectDetails(@PathVariable Long id, Model model) {
 		Project project = projectrepo.findOne(id);
@@ -122,11 +134,13 @@ public class ProjectController {
         model.addAttribute("statussen", statusrepo.findAll());
         model.addAttribute("typeprojecten", typeprojectrepo.findAll());
         model.addAttribute("klanten", klantrepo.findAll());
+        model.addAttribute("gebruikersNormal", gebruikerService.getGebruikersByRol(Rol.NORMAL));
         return "project";
 	}
 	
-	@RequestMapping(value = "/project/{id}", method=RequestMethod.POST)
-	public String updateProjectDetails(@PathVariable Long id, @Valid @ModelAttribute Project project,
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value = "/projectUpdate/{id}", params="bewaarProject" , method=RequestMethod.POST)
+	public String updateProjectDetails(@PathVariable Long id, @Valid @ModelAttribute Project project, 
 			BindingResult result, Model model) {
 		
 		if(result.hasErrors()){
@@ -134,6 +148,7 @@ public class ProjectController {
 			model.addAttribute("statussen", statusrepo.findAll());
 			model.addAttribute("typeprojecten", typeprojectrepo.findAll());
 			model.addAttribute("klanten", klantrepo.findAll());
+			model.addAttribute("gebruikersNormal", gebruikerService.getGebruikersByRol(Rol.NORMAL));
 			
 			return "project";
 		}
@@ -144,7 +159,31 @@ public class ProjectController {
         return "redirect:/project/" + project.getId();
         
 	}
+	
+	/*
+	@RequestMapping(value = "/project/{id}", method=RequestMethod.POST)
+	public String updateProjectDetails(@PathVariable Long id, @Valid @ModelAttribute Project project,
+			BindingResult result, Model model) {
+		
+		if(result.hasErrors()){
+			model.addAttribute("project", project);
+			model.addAttribute("statussen", statusrepo.findAll());
+			model.addAttribute("typeprojecten", typeprojectrepo.findAll());
+			model.addAttribute("klanten", klantrepo.findAll());
+			model.addAttribute("gebruikersNormal", gebruikerService.getGebruikersByRol(Rol.NORMAL));
+			
+			return "project";
+		}
+
+        projectrepo.save(project);
+		
+        model.addAttribute("$aangepastProject", project);
+        return "redirect:/project/" + project.getId();
+        
+	}
+	*/
     
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/verwijderProject/{id}", method=RequestMethod.GET)
 	public String projectDelete(@PathVariable Long id, Model model) {
         projectrepo.delete(id);

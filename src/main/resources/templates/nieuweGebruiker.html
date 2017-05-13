@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head> 
-    <title>Gebruikers database - Creëer</title> 
+    <title th:text="#{msg.gebruiker.database}"></title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
@@ -11,53 +11,59 @@
     	<div class="page-header" id="banner">
      		<div class="row">
           		<div class="col-lg-6 col-md-7 col-sm-6">
-            		<h1>Creëer een nieuwe gebruiker</h1>
+            		<h1 th:text="#{msg.gebruiker.creeerNieuweGebruiker}"></h1>
 					<form th:action="@{/gebruiker}" method="post" th:object="${gebruiker}" class="form-horizontal">
 						<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
 						    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
 						</div>
             			<fieldset>
 	            			<div class="form-group">
-			                    <label class="col-lg-3 control-label">Voornaam:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.voornaam} + ':'"></label>
 			                    <div class="col-lg-9">
 			                    	<input type="text" class="form-control" th:field="*{voornaam}" name="voornaam" autofocus="autofocus"/>
 			                    </div>
 	                		</div>
 	                		<div class="form-group">
-			                    <label class="col-lg-3 control-label">Naam:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.naam} + ':'"></label>
 			                    <div class="col-lg-9">
 			                    	<input type="naam" class="form-control" th:field="*{naam}" name="naam"/>
 			                    </div>
 	                		</div>
 	                		<div class="form-group">
-			                    <label class="col-lg-3 control-label">E-mailadres:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.email} + ':'"></label>
 			                    <div class="col-lg-9">
 			                    	<input type="email" class="form-control" th:field="*{email}" name="email"/>
 			                    </div>
 	                		</div>
 	                	    <div class="form-group">
-			                    <label class="col-lg-3 control-label">Wachtwoord:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.wachtwoord} + ':'"></label>
 			                    <div class="col-lg-9">
 			                    	<input type="password" class="form-control" th:field="*{wachtwoord}" name="wachtwoord"/>
 			                    </div>
 	                		</div>
 	                		<div class="form-group">
-			                    <label class="col-lg-3 control-label">Herhaal wachtwoord:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.herhaalWachtwoord} + ':'"></label>
 			                    <div class="col-lg-9">
 			                    	<input type="password" class="form-control" th:field="*{wachtwoordHerhaald}" name="wachtwoordHerhaald"/>
 			                    </div>
 	                		</div>
-	                		<!-- 
+	                		
 	                		<div class="form-group">
-			                    <label class="col-lg-3 control-label">Rol:</label>
+			                    <label class="col-lg-3 control-label" th:text="#{msg.gebruiker.rol}  + ':'"></label>
 			                    <div class="col-lg-9">
-			                    	<input type="text" class="form-control" th:field="*{adres.postcode}" name="postcode"/>
+			                    	<select name="rol" class="form-control" th:field="*{rol}">
+			                    	<option th:value="0" ></option>
+									<option th:each="rol : ${T(be.mobyus.omj.model.Rol).values()}" 
+										th:value="${rol}" 
+										th:text="${rol}">
+									</option>
+									</select>
 			                    </div>
 	                		</div>
-	                		 -->
+	                		
 	                		<div class="form-group">
                 				<div class="col-lg-12 col-lg-offset-3">
-                					<button type="submit" class="btn btn-primary" name="button">Creëer</button>
+                					<button type="submit" class="btn btn-primary" name="button" th:text="#{msg.creeer}"></button>
                 				</div>
                 			</div>
             			</fieldset>
@@ -65,10 +71,10 @@
             	</div>
             </div>
             <div class="row">
-        		<a th:href="gebruikers">Gebruikers overzicht</a>
+        		<a th:href="gebruikers" th:text="#{msg.gebruiker.overzicht}"></a>
         	</div> 
         	<div class="row">
-        		<a th:href="beginscherm">Naar beginscherm</a>
+        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
 		</div>
 	</div>

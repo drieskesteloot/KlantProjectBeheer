@@ -1,5 +1,6 @@
 package be.mobyus.omj.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +14,13 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Klant {
+public class Klant implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,7 +41,12 @@ public class Klant {
 	private String omschrijving;
 	
 	@OneToMany(mappedBy="klant", cascade = CascadeType.REMOVE)
+	@JsonManagedReference
 	List<Project> projecten;
+	
+	@OneToMany(mappedBy="klant")
+	@JsonManagedReference
+	List<Factuur> facturen;
 	
 	public Klant(){}
 
@@ -95,13 +106,45 @@ public class Klant {
 	public void setOmschrijving(String omschrijving) {
 		this.omschrijving = omschrijving;
 	}
-
+	
 	public List<Project> getProjecten() {
 		return projecten;
 	}
 
 	public void setProjecten(List<Project> projecten) {
 		this.projecten = projecten;
+	}
+	
+	public List<Factuur> getFacturen() {
+		return facturen;
+	}
+
+	public void setFacturen(List<Factuur> facturen) {
+		this.facturen = facturen;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null) {
+	        return false;
+	    }
+	    if (!Klant.class.isAssignableFrom(obj.getClass())) {
+	        return false;
+	    }
+	    final Klant other = (Klant) obj;
+	    if (!(this.email.equals(other.email))) {
+	    	return false;
+	    }
+	    if (!(this.id == other.id)) {
+	        return false;
+	    }
+	    return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Klant [id=" + id + ", naam=" + naam + ", email=" + email + ", adres=" + adres + ", telefoonNummer="
+				+ telefoonNummer + ", omschrijving=" + omschrijving + "]";
 	}
 	
 	

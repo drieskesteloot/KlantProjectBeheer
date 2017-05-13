@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title th:text="#{msg.projecten.overzicht}"></title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+            		<h1 th:text="#{msg.projecten}"></h1>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th th:text="#{msg.project.naam}"></th>
+								<th th:text="#{msg.project.klant}"></th>
+								<th th:text="#{msg.project.contactPersoonKlant}"></th>
+								<th th:text="#{msg.project.prijs}"></th>
+								<th th:text="#{msg.project.typeProject}"></th>
+								<th th:text="#{msg.project.status}"></th>
+								<th th:text="#{msg.project.startDatum}"></th>
+								<th th:text="#{msg.project.eindDatum}"></th>
+								<th th:text="#{msg.gebruikers}"></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="project : ${projecten}">
+								<td th:text="${project.naam}"></td>
+								<td th:text="${project.klant.naam}"></td>
+								<td th:text="${project.contactPersoonKlant}"></td>
+								<td th:text="${project.prijs}"></td>
+								<td th:text="${project.typeProject.naam}"></td>
+								<td th:text="${project.status.naam}"></td>
+								<td th:text="${project.startDatum}"></td>
+								<td th:text="${project.eindDatum}"></td>
+								<td>
+									<span th:each="gebruiker,iterStat : ${project.gebruikers}">
+				    					<span th:text="|${gebruiker.voornaam} ${gebruiker.naam}|"></span>
+				    					<th:block th:if="${!iterStat.last}">,</th:block>
+				    				</span>
+								</td>
+								<td>
+							    	<a th:href="@{/projectTijdsregistratie/{projectId}/{gebruikerId}(projectId=${project.id}, gebruikerId=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.creeerNieuweTijdsregistratie}"></a>
+						    	</td>
+						    	<td>
+							    	<a th:href="@{/mijnProjectTijdsregistraties/{projectId}/{gebruikerId}(projectId=${project.id}, gebruikerId=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdsregistratiesPerProject}"></a>
+						    	</td>
+						    </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+        		<a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
+        	</div>
+        	<div class="row">
+        		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
+        	</div>
+        	
+		</div>
+	</div>
+</body>
+</html>
