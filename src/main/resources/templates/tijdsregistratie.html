@@ -21,8 +21,8 @@
 					<!-- enctype="multipart/form-data" -->
 					<form id="form" name="form" th:action="@{/tijdsregistratieUpdate/{id}(id=${tijdsregistratie.id})}" method="post" th:object="${tijdsregistratie}" class="form-horizontal">
             			<fieldset>
-			                 <div class="form-group">
-			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.gebruiker} + ':'"></label>
+			                <div class="form-group">
+			                	<label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.gebruiker} + ':'"></label>
 			                    <div class="col-lg-9">
 		                			<select name="gebruiker" class="form-control" th:field="*{gebruiker}">
 										<option th:each="gebruiker : ${hulpGebruikers}" 

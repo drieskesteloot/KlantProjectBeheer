@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title th:text="#{msg.facturen.overzicht}"></title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+            		<h1 th:text="#{msg.facturen}"></h1>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th th:text="#{msg.factuur.klant}"></th>
+								<th th:text="#{msg.factuur.omschrijving}"></th>
+								<th th:text="#{msg.factuur.subTotaal}"></th>
+								<th th:text="#{msg.factuur.btw}"></th>
+								<th th:text="#{msg.factuur.totaal}"></th>
+								<th th:text="#{msg.factuur.datumVersturen}"></th>
+								<th th:text="#{msg.factuur.datumBetalen}"></th>
+								<!-- <th th:text="#{msg.factuur.projecten}"></th> -->
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="factuur : ${facturen}">
+								<td th:text="${factuur.klant.naam}"></td>
+								<td th:text="${factuur.omschrijving}"></td>
+								<td th:text="${factuur.subTotaal}"></td>
+								<td th:text="${factuur.BTW}"></td>
+								<td th:text="${factuur.totaal}"></td>
+								<td th:text="${factuur.datum}"></td>
+								<td th:text="${factuur.betaalDatum}"></td>
+								<!--  
+								<td>
+									<span th:each="project,iterStat : ${factuur.klant.projecten}">
+				    					<span th:text="${project.naam}"></span>
+				    					<th:block th:if="${!iterStat.last}">,</th:block>
+				    				</span>
+								</td>
+								-->
+								<td>
+							    	<a th:href="@{/factuur/{id}(id=${factuur.id})}" th:text="#{msg.bewerk}"></a>
+						    	</td>
+						    </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+        	<div class="row">
+        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
+        	</div>
+		</div>
+	</div>
+</body>
+</html>

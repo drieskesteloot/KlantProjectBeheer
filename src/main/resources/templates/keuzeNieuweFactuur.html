@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title th:text="#{msg.facturen.overzicht}"></title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script> 
+		
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+     		<div class="row">
+          		<div class="col-lg-6 col-md-7 col-sm-6">
+            		<h1 th:text="#{msg.facturen.alleProjecten}"></h1>
+            		<h4 th:text="#{msg.factuur.volgensDatum}" class="alert alert-info"></h4>
+					<!-- enctype="multipart/form-data" -->
+					<form th:action="@{/keuzeFactuur}" method="post" th:object="${hulpZoekOpDatum}" class="form-horizontal">
+            			<fieldset>
+            				<div class="form-group">
+			                	<label class="col-lg-3 control-label" th:text="#{msg.klant} + ':'"></label>
+			                    <div class="col-lg-9">
+		                			<select name="klant" class="form-control" th:field="*{klant}">
+										<option th:each="klant : ${hulpKlanten}" 
+											th:value="${klant.id}" 
+											th:text="${klant.naam}"></option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="form-group" style="display:none">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.gebruiker} + ':'"></label>
+			                    <div class="col-lg-9">
+		                			<select name="gebruiker" class="form-control" th:field="*{gebruiker}">
+										<option th:each="gebruiker : ${hulpGebruikers}" 
+											th:value="${gebruiker.id}" 
+											th:text="${gebruiker.voornaam + ' ' + gebruiker.naam}"></option>
+									</select>
+									<p th:if="${#fields.hasErrors('gebruiker')}" th:errors="*{gebruiker}" class="alert alert-danger">Fout in project</p>
+								</div>
+	                		</div>
+							
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.factuur.startDatum} + ':'"></label>
+			                    <div class="col-lg-9">
+			                    	<input type="date" class="form-control" id="startdate" name="startDatum" th:field="*{startDatum}" size="30"/>
+			                    	<p th:if="${#fields.hasErrors('startDatum')}" th:errors="*{startDatum}" class="alert alert-danger">Fout in de startdatum</p>  	
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.factuur.eindDatum} + ':'"></label>
+			                    <div class="col-lg-9">
+			                    	<input type="date" class="form-control" id="enddate" name="eindDatum" th:field="*{eindDatum}" size="30"/>
+			                    	<p th:if="${#fields.hasErrors('eindDatum')}" th:errors="*{eindDatum}" class="alert alert-danger">Fout in de einddatum</p>
+			                    </div>
+	                		</div>
+	                		<div class="form-group">
+                				<div class="col-lg-12 col-lg-offset-3">
+                					<button type="submit" class="btn btn-primary" name="button" th:text="#{msg.Bevestig}"></button>
+                				</div>
+                			</div>
+	                	</fieldset>
+	                </form>
+				</div>
+			</div>
+			<div class="row">
+        		<a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
+        	</div>
+        	<div class="row">
+        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
+        	</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+	/*<![CDATA[*/ 
+		$(function() {
+	        $("#startdate").datepicker({ dateFormat: "yy-mm-dd" });
+	        $("#enddate").datepicker({ dateFormat: "yy-mm-dd" });
+		});
+	/*]]>*/
+	</script> 
+</body>
+</html>

@@ -58,7 +58,7 @@ public class TijdsregistratieController {
 	    CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true);
 	    binder.registerCustomEditor(Date.class, editor);
 	}
-	
+
 	private Gebruiker huidigeGebruiker;
 	private List<Gebruiker> huidigeGebruikers;
 	private Project huidigProject;

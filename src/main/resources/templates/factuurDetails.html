@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title th:text="#{msg.factuurDetails.overzicht}"></title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+	<div class="container">
+    	<div class="page-header" id="banner">
+        	<div class="row">
+          		<div class="col-lg-8 col-md-7 col-sm-6">
+            		<h1 th:text="#{msg.factuurDetails}"></h1>
+
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th th:text="#{msg.factuurDetails.factuur}"></th>
+								<th th:text="#{msg.factuurDetails.omschrijving}"></th>
+								<th th:text="#{msg.factuurDetails.prijs}"></th>
+								<th th:text="#{msg.factuurDetails.aantal}"></th>
+								<th th:text="#{msg.factuurDetails.totaal}"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="factuurDetail : ${factuurDetails}">
+								<td th:text="${factuurDetail.factuur.id}"></td>
+								<td th:text="${factuurDetail.omschrijving}"></td>
+								<td th:text="${factuurDetail.prijs}"></td>
+								<td th:text="${factuurDetail.aantal}"></td>
+								<td th:text="${factuurDetail.totaal}"></td>
+						    </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+        	<div class="row">
+        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
+        	</div>
+		</div>
+	</div>
+</body>
+</html>

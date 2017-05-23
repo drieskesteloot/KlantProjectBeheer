@@ -21,9 +21,9 @@ public class FactuurDetails implements Serializable {
 	private long id;
 	
 	private String omschrijving;
-	private String aantal;
-	private String prijs;
-	private BigDecimal totaal;
+	private float aantal;
+	private float prijs;
+	private float totaal;
 	
 	@ManyToOne
 	@JsonBackReference
@@ -45,27 +45,27 @@ public class FactuurDetails implements Serializable {
 		this.omschrijving = omschrijving;
 	}
 
-	public String getAantal() {
+	public float getAantal() {
 		return aantal;
 	}
 
-	public void setAantal(String aantal) {
+	public void setAantal(float aantal) {
 		this.aantal = aantal;
 	}
 
-	public String getPrijs() {
+	public float getPrijs() {
 		return prijs;
 	}
 
-	public void setPrijs(String prijs) {
+	public void setPrijs(float prijs) {
 		this.prijs = prijs;
 	}
 
-	public BigDecimal getTotaal() {
+	public float getTotaal() {
 		return totaal;
 	}
 
-	public void setTotaal(BigDecimal totaal) {
+	public void setTotaal(float totaal) {
 		this.totaal = totaal;
 	}
 

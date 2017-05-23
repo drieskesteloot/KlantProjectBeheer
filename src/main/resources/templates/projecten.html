@@ -49,8 +49,13 @@
 							    	<a th:href="@{/project/{id}(id=${project.id})}" th:text="#{msg.bewerk}"></a>
 						    	</td>
 						    	<td>
+							    	<a th:href="@{/factuurVoorProject/{id}(id=${project.id})}" th:text="#{msg.maakFactuur}"></a>
+						    	</td>
+						    	<!-- 
+						    	<td>
 							    	<a th:href="@{/verwijderProject/{id}(id=${project.id})}" th:text="#{msg.verwijder}"></a>
 						    	</td>
+						    	 -->
 						    </tr>
 						</tbody>
 					</table>

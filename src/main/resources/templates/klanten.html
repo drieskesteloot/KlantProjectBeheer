@@ -43,8 +43,16 @@
 							    	<a th:href="@{/klant/{id}(id=${klant.id})}" th:text="#{msg.bewerk}"></a>
 						    	</td>
 						    	<td>
+							    	<a th:href="@{/projecten}" th:text="#{msg.maakFactuurVoorProject}"></a>
+						    	</td>
+						    	<td>
+							    	<a th:href="@{/keuzeFactuur/{id}(id=${klant.id})}" th:text="#{msg.maakFactuurVoorProjecten}"></a>
+						    	</td>
+						    	<!--
+						    	<td>
 							    	<a th:href="@{/verwijderKlant/{id}(id=${klant.id})}" th:text="#{msg.verwijder}"></a>
 						    	</td>
+						    	-->
 							</tr>
 						</tbody>
 					</table>

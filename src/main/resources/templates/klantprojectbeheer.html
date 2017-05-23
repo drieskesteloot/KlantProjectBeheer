@@ -21,6 +21,8 @@
             <h1>Maak een keuze</h1>
             <a sec:authorize="hasAuthority('ADMIN')" href="klanten" class="btn btn-primary" th:text="#{msg.klanten}" style="margin-top: 16px"></a>
             <a sec:authorize="hasAuthority('ADMIN')" href="projecten" class="btn btn-primary" th:text="#{msg.projecten}" style="margin-top: 16px"></a>
+            <a sec:authorize="hasAuthority('ADMIN')" href="facturen" class="btn btn-primary" th:text="#{msg.facturen}" style="margin-top: 16px"></a>
+            <a sec:authorize="hasAuthority('ADMIN')" href="factuurDetails" class="btn btn-primary" th:text="#{msg.factuurDetails}" style="margin-top: 16px"></a>
             <a sec:authorize="hasAuthority('ADMIN')" href="gebruikers" class="btn btn-primary" th:text="#{msg.gebruikers}" style="margin-top: 16px"></a>
            	<a th:if="${huidigeGebruiker}" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnProjecten}" style="margin-top: 16px"></a>
            	<a th:if="${huidigeGebruiker}" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnTijdregistraties}" style="margin-top: 16px"></a>

@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import be.mobyus.omj.model.Project;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -27,9 +30,12 @@ public class Factuur implements Serializable {
 	private Date datum;
 	private String omschrijving;
 	private Date betaalDatum;
-	private BigDecimal subTotaal;
+	private float subTotaal;
 	private Double BTW;
-	private BigDecimal totaal;
+	private float totaal;
+	
+	@Transient
+	private List<Project> projecten;	
 	
 	@ManyToOne
 	@JsonBackReference
@@ -71,11 +77,11 @@ public class Factuur implements Serializable {
 		this.betaalDatum = betaalDatum;
 	}
 
-	public BigDecimal getSubTotaal() {
+	public float getSubTotaal() {
 		return subTotaal;
 	}
 
-	public void setSubTotaal(BigDecimal subTotaal) {
+	public void setSubTotaal(float subTotaal) {
 		this.subTotaal = subTotaal;
 	}
 
@@ -83,17 +89,25 @@ public class Factuur implements Serializable {
 		return BTW;
 	}
 
-	public void setBTW(Double bTW) {
-		BTW = bTW;
+	public void setBTW(Double BTW) {
+		this.BTW = BTW;
 	}
 
-	public BigDecimal getTotaal() {
+	public float getTotaal() {
 		return totaal;
 	}
 
-	public void setTotaal(BigDecimal totaal) {
+	public void setTotaal(float totaal) {
 		//totaal.multiply(new BigDecimal(this.BTW))
 		this.totaal = totaal;
+	}
+
+	public List<Project> getProjecten() {
+		return projecten;
+	}
+
+	public void setProjecten(List<Project> projecten) {
+		this.projecten = projecten;
 	}
 
 	public Klant getKlant() {

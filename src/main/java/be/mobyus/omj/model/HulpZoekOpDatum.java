@@ -15,6 +15,7 @@ public class HulpZoekOpDatum implements Serializable {
 	private Date eindDatum;
 	
 	private Gebruiker gebruiker;
+	private Klant klant;
 	
 	public Date getStartDatum() {
 		return startDatum;
@@ -38,6 +39,14 @@ public class HulpZoekOpDatum implements Serializable {
 
 	public void setGebruiker(Gebruiker gebruiker) {
 		this.gebruiker = gebruiker;
+	}
+
+	public Klant getKlant() {
+		return klant;
+	}
+
+	public void setKlant(Klant klant) {
+		this.klant = klant;
 	}
 	
 	
