@@ -30,21 +30,6 @@ public class FactuurValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		Factuur factuur = (Factuur)target;
-		/*
-		List<Project> projecten = factuur.getProjecten();
-		Collection<Tijdsregistratie> tijdsregistraties = null;
-		Collection<Tijdsregistratie> gevalideerdeTijdsregistraties = null;
-		
-		for(Project pr : projecten){
-			tijdsregistraties = tijdsregistratieService.getTijdsregistratieByProject(pr);
-			for(Tijdsregistratie tijdsreg : tijdsregistraties){
-				if(tijdsreg.getGevalideerd()){
-					gevalideerdeTijdsregistraties.add(tijdsreg);
-				}
-			}
-			if
-		}
-		*/
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "omschrijving", "factuur.omschrijving");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "subTotaal", "factuur.subTotaal");

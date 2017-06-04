@@ -4,15 +4,42 @@
     <title th:text="#{msg.tijdsregistratie.overzicht}"></title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   	<script type="text/javascript" src="/dropdown.js"></script>
 	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	
 </head>
 <body>
 	<div class="container">
     	<div class="page-header" id="banner">
         	<div class="row">
           		<div class="col-lg-8 col-md-7 col-sm-6">
-            		<h1 th:text="#{msg.tijdsregistraties}"></h1>
-
+            		<h1 th:text="#{msg.tijdsregistratie.gevondenOpDatum}"></h1>
+					<div class="btn-group btn-group-justified" role="group" aria-label="...">
+						<div class="btn-group" role="group">
+							<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tijdsregistraties
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a></li>
+								<li><a th:href="@{/unSubmittedTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.unSubmittedTijdsregistraties2}"></a></li>
+								<li><a th:href="@{/submittedTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.submittedTijdsregistraties2}"></a></li>
+								<li><a th:href="@{/rejectedTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.rejectedTijdsregistraties2}"></a></li>
+								<li><a th:href="@{/gevalideerdeTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.gevalideerdeTijdsregistraties2}"></a></li>
+								<li><a th:href="@{/tijdsregistratiesOpDatum}" th:text="#{msg.tijdsregistratie.zoekOpDatum2}"></a></li>
+								<li><a th:href="@{/submitTijdsregistraties}" th:text="#{msg.tijdsregistratie.bevestigAllemaal2}"></a></li>
+								<li><a th:href="@{/nieuweTijdsregistratie/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.creeerNieuweTijdsregistratie}"></a></li>
+							</ul>
+						</div>
+						<div class="btn-group" role="group">
+							<a type="button" class="btn btn-default" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnProjecten}"></a>
+			        	</div>
+						<div  class="btn-group" role="group">
+							<a type="button" class="btn btn-default" th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
+			        	</div>
+					</div>
+					
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
@@ -58,6 +85,7 @@
 					</table>
 				</div>
 			</div>
+			<!--  
 			<div class="row">
         		<a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
         	</div>
@@ -67,7 +95,7 @@
         	<div class="row">
         		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
-        	
+        	-->
 		</div>
 	</div>
 </body>

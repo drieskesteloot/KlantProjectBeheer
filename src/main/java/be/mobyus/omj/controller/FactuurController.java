@@ -2,6 +2,7 @@ package be.mobyus.omj.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +63,7 @@ public class FactuurController {
 	@Autowired
 	TijdsregistratieService tijdsregistratieService;
 	
+	private final float loonKost = 85.0f;
 	private List<Project> huidigeProjecten;
 	private List<Klant> huidigeKlanten;
 	private List<FactuurDetails> huidigeFactuurDetails;
@@ -117,9 +119,9 @@ public class FactuurController {
 			for(Tijdsregistratie tijdsreg : tijdsregistraties){
 				if(tijdsreg.getGevalideerd()){
 					FactuurDetails factuurDetail = new FactuurDetails();
-					factuurDetail.setOmschrijving(tijdsreg.getOmschrijving());
+					factuurDetail.setOmschrijving("Tijdsregistratie " + tijdsreg.getOmschrijving());
 					factuurDetail.setAantal(tijdsreg.getAantalUren());
-					factuurDetail.setPrijs(85.0f);
+					factuurDetail.setPrijs(loonKost);
 					factuurDetail.setTotaal(factuurDetail.getAantal() * factuurDetail.getPrijs());
 					factuurDetails.add(factuurDetail);
 					subTotaal += factuurDetail.getTotaal();
@@ -128,7 +130,7 @@ public class FactuurController {
 			factuur.setSubTotaal(subTotaal);
 			huidigeFactuurDetails = factuurDetails;
 		}
-		factuur.setTotaal((factuur.getSubTotaal() * 1.21f));
+		factuur.setTotaal((factuur.getSubTotaal() * ((factuur.getBTW().floatValue() / 100) + 1)));
 		
 		model.addAttribute("hulpProjecten", hulpProjecten);
 		model.addAttribute("hulpKlanten", hulpKlanten);
@@ -200,13 +202,124 @@ public class FactuurController {
 			return "keuzeNieuweFactuur";
 		}
 		
-		List<Project> klantProjecten = (List<Project>) projectrepo.findByKlant(hulpZoekOpDatum.getKlant());
+		List<Project> startProjecten = (List<Project>) projectrepo.findByKlant(hulpZoekOpDatum.getKlant());
+		//List<Project> klantProjecten = (List<Project>) projectrepo.findByKlant(hulpZoekOpDatum.getKlant());
+		List<Project> klantProjecten = new ArrayList<>();
 		
-		for(Project pr : klantProjecten){
-			
+		if(hulpZoekOpDatum.getStartDatum() == null && hulpZoekOpDatum.getEindDatum() == null){
+			klantProjecten = (List<Project>) projectrepo.findByKlant(hulpZoekOpDatum.getKlant());
+		}
+		else{
+			for(Project project : startProjecten){
+		
+				if((hulpZoekOpDatum.getStartDatum().equals(project.getStartDatum()) || hulpZoekOpDatum.getStartDatum().before(project.getStartDatum()))
+						&& (hulpZoekOpDatum.getEindDatum().equals(project.getEindDatum()) || hulpZoekOpDatum.getEindDatum().after(project.getEindDatum()))){
+					klantProjecten.add(project);
+				}
+				/*
+				else{
+					klantProjecten.add(project);
+				}
+				*/
+			}
 		}
 		
-		return "";
+		if(klantProjecten.isEmpty()){
+			String legeLijst = "Geen projecten gevonden tussen de opgegeven waarden.";
+			model.addAttribute("legeLijst", legeLijst);
+			model.addAttribute("hulpGebruikers", huidigeGebruikers);
+			model.addAttribute("hulpZoekOpDatum", hulpZoekOpDatum);
+			model.addAttribute("hulpKlanten", huidigeKlanten);
+			return "keuzeNieuweFactuur";
+		}
+
+		Factuur factuur = new Factuur();
+		List<FactuurDetails> factuurDetails = new ArrayList<>();
+		for(Project pr : klantProjecten){
+			FactuurDetails factuurDetail;
+			if(pr.getTypeProject().getNaam().equals("Fixed price")){
+				factuurDetail = new FactuurDetails();
+				factuurDetail.setAantal(1);
+				factuurDetail.setOmschrijving(pr.getTypeProject().getNaam());
+				factuurDetail.setPrijs(pr.getPrijs());
+				factuurDetail.setTotaal(factuurDetail.getAantal() * factuurDetail.getPrijs());
+				factuurDetails.add(factuurDetail);
+			}
+			else if(pr.getTypeProject().getNaam().equals("Time & Material")){
+				for(Tijdsregistratie tr : pr.getTijdsRegistraties()){
+					if(tr.getGevalideerd()){
+						factuurDetail = new FactuurDetails();
+						factuurDetail.setAantal(tr.getAantalUren());
+						factuurDetail.setOmschrijving("Tijdsregistratie " + tr.getOmschrijving());
+						factuurDetail.setPrijs(loonKost);
+						factuurDetail.setTotaal(factuurDetail.getAantal() * factuurDetail.getPrijs());
+						factuurDetails.add(factuurDetail);
+					}
+				}
+			}
+		}
+		factuur.setDetails(factuurDetails);
+		factuur.setOmschrijving("Factuur van meerdere projecten");
+		factuur.setDatum(new Date());
+		
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, 30);
+		factuur.setBetaalDatum(cal.getTime());
+		factuur.setBTW(21.0);
+		factuur.setKlant(hulpZoekOpDatum.getKlant());
+		float factuurSubTotaal = 0.0f;
+		factuurService.create(factuur);
+		for(FactuurDetails fd : factuurDetails){
+			factuurSubTotaal += fd.getTotaal();
+			fd.setFactuur(factuur);
+			factuurDetailsService.create(fd);
+		}
+		factuur.setSubTotaal(factuurSubTotaal);
+		factuur.setTotaal(factuur.getSubTotaal() * ((factuur.getBTW().floatValue() / 100) + 1));
+		factuurService.update(factuur);
+		return "redirect:/facturen";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value="/detailFactuur/{id}", method=RequestMethod.GET)
+	public String detailFactuur(@PathVariable Long id, Model model){
+		Factuur factuur = factuurService.getFactuurById(id);
+		Collection<FactuurDetails> factuurDetails = factuurDetailsService.getAllFactuurDetailsByFactuur(factuur);
+		List<Klant> klanten = new ArrayList<>();
+		klanten.add(factuur.getKlant());
+		
+		model.addAttribute("factuur", factuur);
+		model.addAttribute("factuurDetails", factuurDetails);
+		model.addAttribute("hulpKlanten", klanten);
+		return "detailVanEenFactuur";
+	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value="/factuurBewerk/{id}", method=RequestMethod.GET)
+	public String factuurBewerk(@PathVariable Long id, Model model){
+		huidigeKlanten = null;
+		Factuur factuur = factuurService.getFactuurById(id);
+		List<Klant> klanten = new ArrayList<>();
+		klanten.add(factuur.getKlant());
+		huidigeKlanten = klanten;
+		
+		model.addAttribute("hulpKlanten", klanten);
+		model.addAttribute("factuur", factuur);
+		return "factuur";
+	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value="/factuurBewerk", method=RequestMethod.POST)
+	public String updateFactuur(@Valid @ModelAttribute Factuur factuur, BindingResult result, Model model){
+		if(result.hasErrors()){
+			model.addAttribute("hulpKlanten", huidigeKlanten);
+			model.addAttribute("factuur", factuur);
+			return "factuur";
+		}
+		
+		factuurService.update(factuur);
+		
+		return "redirect:/facturen";
+	}
 }

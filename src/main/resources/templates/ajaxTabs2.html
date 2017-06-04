@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	
+	
+   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>  
+   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+   	
+</head>
+<body>
+	<div id="tabs" class="container">
+	  <ul id="myTabs" class="nav nav-tabs">
+	  	<li class="active"><a data-toggle="tab" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a></li>
+	    <li><a data-toggle="tab" th:href="@{/unSubmittedTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.unSubmittedTijdsregistraties2}"></a></li>
+	    <li><a data-toggle="tab" th:href="@{/submittedTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.submittedTijdsregistraties2}"></a></li>
+	    <li><a data-toggle="tab" th:href="@{/rejectedTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.rejectedTijdsregistraties2}"></a></li>
+	  	<li><a data-toggle="tab" th:href="@{/gevalideerdeTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.gevalideerdeTijdsregistraties2}"></a></li>
+	  	<li><a data-toggle="tab" th:href="@{/submitTijdsregistraties}" th:text="#{msg.tijdsregistratie.bevestigAllemaal2}"></a></li>
+	  	<li><a data-toggle="tab" th:href="@{/tijdsregistratiesOpDatum}" th:text="#{msg.tijdsregistratie.zoekOpDatum2}"></a></li>
+	  	<li><a data-toggle="tab" th:href="@{/nieuweTijdsregistratie/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.tijdsregistratie.creeerNieuweTijdsregistratie}"></a></li>
+	  </ul>
+	</div>
+	<div class="tab-content">
+		<div class="tab-pane active" id="mijnRegistraties"></div>
+		<div class="tab-pane active" id="unsubmitted"></div>
+		<div class="tab-pane active" id="submitted"></div>
+		<div class="tab-pane active" id="rejected"></div>
+		<div class="tab-pane active" id="gevalideerd"></div>
+		<div class="tab-pane active" id="bevestigAllemaal"></div>
+		<div class="tab-pane active" id="zoekOpDatum"></div>
+		<div class="tab-pane active" id="nieuweTijdsregistratie"></div>
+	</div>
+	
+	<script th:inline="javascript">
+	$( function() {
+	    $( "#tabs" ).tabs({
+	      beforeLoad: function( event, ui ) {
+	        ui.jqXHR.fail(function() {
+	          ui.panel.html(
+	            "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+	            "If this wouldn't be a demo." );
+	        });
+	      }
+	    });
+	    $( "#tabs" ).tabs().find( ".ui-tabs-nav" ).sortable({
+	        axis: "x",
+	        stop: function() {
+	          tabs.tabs( "refresh" );
+	        }
+	      });
+	  });
+	</script>
+</body>
+</html>

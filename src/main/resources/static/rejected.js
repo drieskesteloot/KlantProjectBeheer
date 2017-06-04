@@ -8,10 +8,6 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (result) {
         	if(result.length > 0){
-        		//result.forEach(function(result){alert(result.omschrijving)});
-        		//alert('U heeft afgekeurde tijdsregistraties!\n' + joinObj(result, 'omschrijving').join("\n"));
-        		//alert('U heeft afgekeurde tijdsregistraties!\n' + result.join("\n"));
-        		//alert('U heeft afgekeurde tijdsregistraties!');
         		localStorage.removeItem('alerted');
         		var alerted = sessionStorage.getItem('alerted') || '';
                 if (alerted != 'yes') {
@@ -32,8 +28,4 @@ function joinObj(a, attr) {
 	    out.push("Omschrijving: " + a[i][attr]); 
 	  } 
 	 return out;
-}
-
-function test(){
-	$.getJSON("/rejectedTijdsregistraties");
 }

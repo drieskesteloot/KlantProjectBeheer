@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -89,12 +90,17 @@ public class TijdsregistratieController {
 			}
 		}
 		
+		/*
 		if(gebruiker.getRol() == Rol.ADMIN){
 			hulpProjecten = (List<Project>) projectrepo.findAll();
 		}
+		*/
 		
 		if(gebruiker.getRol() == Rol.ADMIN){
+			/*
 			hulpGebruikers = (List<Gebruiker>) gebruikerService.getGebruikersByRol(Rol.NORMAL);
+			*/
+			hulpGebruikers = project.getGebruikers();
 		}
 		
 		huidigeProjecten = hulpProjecten;
@@ -179,11 +185,6 @@ public class TijdsregistratieController {
 	public String mijnTijdsregistratiesList(@PathVariable Long id, Model model) {
 		Gebruiker gebruiker = gebruikerService.getGebruikerById(id);
 		Collection<Tijdsregistratie> mijnTijdsregistraties = tijdsregistratieService.getTijdsregistratieByGebruiker(gebruiker);
-		
-		/*
-		HuidigeGebruiker ingelogdeGebruiker = (HuidigeGebruiker)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    Gebruiker gebruikerTest = ingelogdeGebruiker.getGebruiker();
-		*/
 		
 		if(gebruiker.getRol() == Rol.ADMIN){
 			mijnTijdsregistraties = tijdsregistratieService.getAllTijdsregistraties();
@@ -323,6 +324,16 @@ public class TijdsregistratieController {
 		model.addAttribute("tijdsregistraties", mijnGevalideerdeTijdsregistraties);
 		
 		return "mijnGevalideerdeTijdsregistraties";
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/rejectedTijdsregistraties")
+	public @ResponseBody Collection<Tijdsregistratie> rejectedTijdsregistratiesAjaxCall(){
+		HuidigeGebruiker ingelogdeGebruiker = (HuidigeGebruiker)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    Gebruiker gebruiker = ingelogdeGebruiker.getGebruiker();
+	    Collection<Tijdsregistratie> mijnRejectedTijdsregistraties = tijdsregistratieService.getAllRejectedTijdsregistratiesByGebruiker(gebruiker, true);
+
+	    return mijnRejectedTijdsregistraties; 
 	}
 
 }

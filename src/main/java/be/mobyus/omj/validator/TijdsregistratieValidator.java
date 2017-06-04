@@ -1,16 +1,23 @@
 package be.mobyus.omj.validator;
 
 import java.util.Date;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+import be.mobyus.omj.dao.ProjectRepository;
+import be.mobyus.omj.model.Project;
 import be.mobyus.omj.model.Tijdsregistratie;
 
 @Component
 public class TijdsregistratieValidator implements Validator {
+	
+	@Autowired
+	ProjectRepository projectrepo;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -25,11 +32,15 @@ public class TijdsregistratieValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "aantalUren", "tijdsregistratie.aantalUrenNotNull");
 		
 		
-		if(tijdsregistratie.getGebruiker() == null){
-			errors.rejectValue("gebruiker", "tijdsregistratie.gebruikerNotNull");
+		List<Project> projecten = (List<Project>) projectrepo.findByGebruikers(tijdsregistratie.getGebruiker());
+		if(tijdsregistratie.getProject() != null && !projecten.contains(tijdsregistratie.getProject())){
+			errors.rejectValue("project", "tijdsregistratie.gebruikerProjectVerkeerd");
 		}
 		if(tijdsregistratie.getProject() == null){
 			errors.rejectValue("project", "tijdsregistratie.projectNotNull");
+		}
+		if(tijdsregistratie.getGebruiker() == null){
+			errors.rejectValue("gebruiker", "tijdsregistratie.gebruikerNotNull");
 		}
 		/*
 		if(tijdsregistratie.getAantalUren() == null){

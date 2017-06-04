@@ -20,7 +20,7 @@ import be.mobyus.omj.service.gebruiker.GebruikerService;
 import be.mobyus.omj.service.tijdsregistratie.TijdsregistratieService;
 
 @RestController
-public class TijdsregistratieRestController {
+public class TijdsregistratieRestController_OBS {
 	
 	@Autowired
 	TijdsregistratieService tijdsregistratieService;
@@ -28,6 +28,7 @@ public class TijdsregistratieRestController {
 	@Autowired
 	GebruikerService gebruikerService;
 	
+	/*
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/rejectedTijdsregistraties")
 	public @ResponseBody Collection<Tijdsregistratie> rejectedTijdsregistratiesAjaxCall(){
@@ -39,9 +40,9 @@ public class TijdsregistratieRestController {
 	    if(!mijnRejectedTijdsregistraties.isEmpty()){
 	    	message = "U heeft afgekeurde tijdsregistraties";
 	    }
-	    */
+	    
 	    return mijnRejectedTijdsregistraties; 
-	}
+	}*/
 	
 	//@GetMapping("/updateUnsubmittedTijdregistraties")
 	@PreAuthorize("isAuthenticated()")

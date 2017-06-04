@@ -13,27 +13,37 @@
 	<script type="text/javascript" src="/rejected.js"></script>
 </head>
 <body>
-	<div class="container">
+
+<div class="container">
       <div class="page-header" id="banner">
         <div class="row">
-          <div class="col-lg-8 col-md-7 col-sm-6" style="width: 100%; height: 100vh; position: relative; 
-          text-align: center;">
-            <h1>Maak een keuze</h1>
-            <a sec:authorize="hasAuthority('ADMIN')" href="klanten" class="btn btn-primary" th:text="#{msg.klanten}" style="margin-top: 16px"></a>
-            <a sec:authorize="hasAuthority('ADMIN')" href="projecten" class="btn btn-primary" th:text="#{msg.projecten}" style="margin-top: 16px"></a>
-            <a sec:authorize="hasAuthority('ADMIN')" href="facturen" class="btn btn-primary" th:text="#{msg.facturen}" style="margin-top: 16px"></a>
-            <a sec:authorize="hasAuthority('ADMIN')" href="factuurDetails" class="btn btn-primary" th:text="#{msg.factuurDetails}" style="margin-top: 16px"></a>
-            <a sec:authorize="hasAuthority('ADMIN')" href="gebruikers" class="btn btn-primary" th:text="#{msg.gebruikers}" style="margin-top: 16px"></a>
-           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnProjecten}" style="margin-top: 16px"></a>
-           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnTijdregistraties}" style="margin-top: 16px"></a>
-           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnKlanten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnKlanten}" style="margin-top: 16px"></a>
-           	<a th:if="${huidigeGebruiker == null}" href="login" class="btn btn-primary" th:text="#{msg.inLoggen}" style="margin-top: 16px"></a>
-          	<form th:if="${huidigeGebruiker}" th:action="@{/logout}" method="post" style="margin-top: 16px">
-	    		<button class="btn btn-primary" type="submit" th:text="#{msg.uitLoggen}"></button>
+        	<div class="col-lg-8 col-md-7 col-sm-6" style="width: 100%; height: auto; position: relative; 
+	          text-align: center;">
+            	<h1>Maak een keuze</h1>
+            	<a sec:authorize="hasAuthority('ADMIN')" href="klanten" class="btn btn-primary" th:text="#{msg.klanten}" style="margin-top: 16px"></a>
+	            <a sec:authorize="hasAuthority('ADMIN')" href="projecten" class="btn btn-primary" th:text="#{msg.projecten}" style="margin-top: 16px"></a>
+	            <a sec:authorize="hasAuthority('ADMIN')" href="gebruikers" class="btn btn-primary" th:text="#{msg.gebruikers}" style="margin-top: 16px"></a>
+	            <a sec:authorize="hasAuthority('ADMIN')" href="facturen" class="btn btn-primary" th:text="#{msg.facturen}" style="margin-top: 16px"></a>
+	            <a sec:authorize="hasAuthority('ADMIN')" href="factuurDetails" class="btn btn-primary" th:text="#{msg.factuurDetails}" style="margin-top: 16px"></a>
+			</div>
+		</div>
+		<div class="row">
+        	<div class="col-lg-8 col-md-7 col-sm-6" style="width: 100%; height: auto; position: relative; 
+	          text-align: center;">
+	          <a th:if="${huidigeGebruiker}" th:href="@{/mijnKlanten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnKlanten}" style="margin-top: 16px"></a>
+	           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnProjecten}" style="margin-top: 16px"></a>
+	           	<a th:if="${huidigeGebruiker}" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" class="btn btn-primary" th:text="#{msg.mijnTijdregistraties}" style="margin-top: 16px"></a>
+	           	<!--  
+	           	<a th:if="${huidigeGebruiker}" th:href="@{/ajaxTabs}" class="btn btn-primary" th:text="TestTabs" style="margin-top: 16px"></a>
+	           	<a th:if="${huidigeGebruiker}" th:href="@{/ajaxTabs2}" class="btn btn-primary" th:text="TestTabs2" style="margin-top: 16px"></a>
+	           	-->
+	           	<a th:if="${huidigeGebruiker == null}" th:href="login" class="btn btn-primary" th:text="#{msg.inLoggen}" style="margin-top: 16px"></a>
+	          	<form th:if="${huidigeGebruiker}" th:action="@{/logout}" method="post" style="margin-top: 16px">
+		    		<button class="btn btn-primary" type="submit" th:text="#{msg.uitLoggen}"></button>
 			</form>
-          </div>
-        </div>
-      </div>
-    </div>
+	        </div>
+	    </div>
+	</div>
+</div>
 </body>
 </html>

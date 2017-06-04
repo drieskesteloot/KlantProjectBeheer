@@ -23,7 +23,7 @@
 								<th th:text="#{msg.factuur.totaal}"></th>
 								<th th:text="#{msg.factuur.datumVersturen}"></th>
 								<th th:text="#{msg.factuur.datumBetalen}"></th>
-								<!-- <th th:text="#{msg.factuur.projecten}"></th> -->
+								<th></th>
 								<th></th>
 							</tr>
 						</thead>
@@ -36,16 +36,11 @@
 								<td th:text="${factuur.totaal}"></td>
 								<td th:text="${factuur.datum}"></td>
 								<td th:text="${factuur.betaalDatum}"></td>
-								<!--  
 								<td>
-									<span th:each="project,iterStat : ${factuur.klant.projecten}">
-				    					<span th:text="${project.naam}"></span>
-				    					<th:block th:if="${!iterStat.last}">,</th:block>
-				    				</span>
-								</td>
-								-->
-								<td>
-							    	<a th:href="@{/factuur/{id}(id=${factuur.id})}" th:text="#{msg.bewerk}"></a>
+							    	<a th:href="@{/factuurBewerk/{id}(id=${factuur.id})}" th:text="#{msg.bewerk}"></a>
+						    	</td>
+						    	<td>
+							    	<a th:href="@{/detailFactuur/{id}(id=${factuur.id})}" th:text="#{msg.detail}"></a>
 						    	</td>
 						    </tr>
 						</tbody>

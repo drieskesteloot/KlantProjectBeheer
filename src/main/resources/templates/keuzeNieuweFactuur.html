@@ -18,8 +18,9 @@
           		<div class="col-lg-6 col-md-7 col-sm-6">
             		<h1 th:text="#{msg.facturen.alleProjecten}"></h1>
             		<h4 th:text="#{msg.factuur.volgensDatum}" class="alert alert-info"></h4>
+            		<h5 th:if="${legeLijst != null}" th:text="${legeLijst}" class="alert alert-danger"></h5>
 					<!-- enctype="multipart/form-data" -->
-					<form th:action="@{/keuzeFactuur}" method="post" th:object="${hulpZoekOpDatum}" class="form-horizontal">
+					<form id="form" th:action="@{/keuzeFactuur}" method="post" th:object="${hulpZoekOpDatum}" class="form-horizontal">
             			<fieldset>
             				<div class="form-group">
 			                	<label class="col-lg-3 control-label" th:text="#{msg.klant} + ':'"></label>
@@ -67,11 +68,13 @@
 	                </form>
 				</div>
 			</div>
+			<!-- 
 			<div class="row">
         		<a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
         	</div>
+        	 -->
         	<div class="row">
-        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
+        		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
 		</div>
 	</div>
@@ -80,6 +83,12 @@
 		$(function() {
 	        $("#startdate").datepicker({ dateFormat: "yy-mm-dd" });
 	        $("#enddate").datepicker({ dateFormat: "yy-mm-dd" });
+	        var startDatum = $("#startdate").val();
+	        var eindDatum = $("#enddate").val();
+	        $('#form').bind('submit', function () {
+	            if((startDatum === null && eindDatum === null) || (startDatum === null && eindDatum === null))
+	            	alert(Test);
+	          });
 		});
 	/*]]>*/
 	</script> 

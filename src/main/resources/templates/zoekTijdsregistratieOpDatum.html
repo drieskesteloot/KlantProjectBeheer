@@ -4,11 +4,20 @@
     <title th:text="#{msg.tijdsregistratie.overzicht}"></title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>	  
+	<!--  
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" /> 
+	-->
 	
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>  
    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>  
-   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script> 
+   	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	
+   	<!--
+   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>  
+	-->
 		
 </head>
 <body>
@@ -17,17 +26,31 @@
      		<div class="row">
           		<div class="col-lg-6 col-md-7 col-sm-6">
             		<h1 th:text="#{msg.tijdsregistratie.zoekOpDatum}"></h1>
-					<!-- enctype="multipart/form-data" -->
-					<form th:action="@{/tijdsregistratiesOpDatum/{id}(id=${huidigeGebruiker.id})}" method="get" th:object="${hulpZoekOpDatum}" class="form-horizontal">
+					<div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin-top: 16px; margin-bottom: 16px">
+						<div class="btn-group" role="group">
+							<a class="btn btn-default" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
+						</div>
+						<div class="btn-group" role="group">
+							<a type="button" class="btn btn-default" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnProjecten}"></a>
+			        	</div>
+						<div  class="btn-group" role="group">
+							<a type="button" class="btn btn-default" th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
+			        	</div>
+					</div>
+					
+					<form id="form" th:action="@{/tijdsregistratiesOpDatum/{id}(id=${huidigeGebruiker.id})}" method="get" th:object="${hulpZoekOpDatum}" class="form-horizontal">
             			<fieldset>
-            				<!-- 
-            				<div class="form-group">
-			                    <label class="col-lg-3 control-label" th:text="#{msg.project.startDatum} + ':'"></label>
+            				<div class="form-group" style="display:none">
+			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.gebruiker} + ':'"></label>
 			                    <div class="col-lg-9">
-			                    	<input type="text" class="form-control" name="startDatum" size="30"/>
-			                    </div>
+		                			<select name="gebruiker" class="form-control" th:field="*{gebruiker}">
+										<option th:each="gebruiker : ${hulpGebruikers}" 
+											th:value="${gebruiker.id}" 
+											th:text="${gebruiker.voornaam + ' ' + gebruiker.naam}"></option>
+									</select>
+									<p th:if="${#fields.hasErrors('gebruiker')}" th:errors="*{gebruiker}" class="alert alert-danger">Fout in project</p>
+								</div>
 	                		</div>
-	                		 -->
 	                		<div class="form-group">
 			                    <label class="col-lg-3 control-label" th:text="#{msg.project.startDatum} + ':'"></label>
 			                    <div class="col-lg-9">
@@ -54,19 +77,49 @@
 	                </form>
 				</div>
 			</div>
+			<!--  
 			<div class="row">
         		<a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
         	</div>
+        	
         	<div class="row">
-        		<a th:href="beginscherm" th:text="#{msg.naarBeginscherm}"></a>
+        		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
+        	-->
+        	<div id="dialog" title="Basic dialog" >
+			 	<p>Gelieve een start- en einddatum te selecteren</p>
+			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+	<script th:inline="javascript">
+	/*<![CDATA[*/
 		$(function() {
-	        $("#startdate").datepicker({ dateFormat: "yy-mm-dd" })
-	        $("#enddate").datepicker({ dateFormat: "yy-mm-dd" })
+	        $("#startdate").datepicker({ dateFormat: "yy-mm-dd"});
+	        $("#enddate").datepicker({ dateFormat: "yy-mm-dd"});
+	        $("#dialog").hide(50);
+	        $('#form').bind('submit', function (e) {
+	        	if($("#startdate").datepicker("getDate") === null && $("#enddate").datepicker("getDate") === null) {
+	        		$("#dialog").dialog({
+	        	        resizable: false,
+	        	        modal: true,
+	        	        title: "Foutmelding",
+	        	        height: 250,
+	        	        width: 400,
+	        	        dialogClass: "ui-state-error",
+	        	        buttons: {
+	        	            "OK": function () {
+	        	                $(this).dialog('close');
+	        	            }
+	        	        }
+	        	    });
+	        		e.preventDefault();
+	        	}
+	        });
 		});
+		/*]]>*/
 	</script> 
 </body>
+<!-- 
+
+ -->
 </html>

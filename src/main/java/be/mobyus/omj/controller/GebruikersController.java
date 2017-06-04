@@ -79,11 +79,4 @@ public class GebruikersController {
         return "mijnKlanten";
 	}
 	
-	/*
-	@RequestMapping(value = "/gebruikers", method=RequestMethod.GET)
-	public ModelAndView getGebruikersPage(){
-		return new ModelAndView("gebruikers", "gebruikers", gebruikerService.getAllGebruikers());
-	}
-	*/
-	
 }

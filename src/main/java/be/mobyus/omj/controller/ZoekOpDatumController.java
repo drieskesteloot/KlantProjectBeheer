@@ -52,6 +52,8 @@ public class ZoekOpDatumController {
 	@Autowired
 	HulpZoekOpDatumValidator hulpZoekOpDatumValidator;
 	
+	private List<Gebruiker> huidigeGebruikers;
+	
 	@InitBinder("hulpZoekOpDatum")
 	public void initBinder(WebDataBinder binder) {
 		binder.addValidators(hulpZoekOpDatumValidator);
@@ -63,6 +65,13 @@ public class ZoekOpDatumController {
 	@RequestMapping(value="/tijdsregistratiesOpDatum",method=RequestMethod.GET)
 	public String zoekTijdsregistratiesOpDatum(Model model){
 		HulpZoekOpDatum hulpZoekOpDatum = new HulpZoekOpDatum();
+		HuidigeGebruiker ingelogdeGebruiker = (HuidigeGebruiker)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    Gebruiker gebruiker = ingelogdeGebruiker.getGebruiker();
+	    List<Gebruiker> hulpGebruikers = new ArrayList<>();
+	    hulpGebruikers.add(gebruiker);
+	    huidigeGebruikers = hulpGebruikers;
+	    
+	    model.addAttribute("hulpGebruikers", hulpGebruikers);
 		model.addAttribute("hulpZoekOpDatum", hulpZoekOpDatum);
 		return "zoekTijdsregistratieOpDatum";
 	}
@@ -71,6 +80,7 @@ public class ZoekOpDatumController {
 	@RequestMapping(value="/tijdsregistratiesOpDatum/{id}",method=RequestMethod.GET)
 	public String mijnTijdsregistratiesOpDatum(@Valid @ModelAttribute HulpZoekOpDatum hulpZoekOpDatum, BindingResult result, @PathVariable Long id, Model model){
 		if(result.hasErrors()){
+			model.addAttribute("hulpGebruikers", huidigeGebruikers);
 			return "zoekTijdsregistratieOpDatum";
 		}
 		
@@ -92,28 +102,6 @@ public class ZoekOpDatumController {
 		model.addAttribute("tijdsregistraties", gevondenTijdsregistraties);
 		return "mijnTijdsregistratiesOpDatum";
 	}
-	
-	
-	
-	/*
-	@RequestMapping(value="/tijdsregistratiesOpDatum/{id}",method=RequestMethod.GET)
-	public String mijnTijdsregistratiesOpDatum(@PathVariable Long id, @RequestParam Date startDatum, @RequestParam Date eindDatum, Model model){
-		Gebruiker gebruiker = gebruikerService.getGebruikerById(id);
-		Collection<Tijdsregistratie> tijdsregistraties = tijdsregistratieService.getTijdsregistratieByGebruiker(gebruiker);
-		
-		List<Tijdsregistratie> gevondenTijdsregistraties = new ArrayList<>();
-		
-		for(Tijdsregistratie tijdsreg : tijdsregistraties){
-			if((tijdsreg.getDatum().equals(startDatum) || tijdsreg.getDatum().after(startDatum)) && (tijdsreg.getDatum().equals(eindDatum) || tijdsreg.getDatum().before(eindDatum))){
-				gevondenTijdsregistraties.add(tijdsreg);
-			}
-		}
-		
-		model.addAttribute("tijdsregistraties", tijdsregistraties);
-		
-		return "";
-	}
-	*/
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value="/submitTijdsregistraties",method=RequestMethod.GET)
@@ -169,7 +157,6 @@ public class ZoekOpDatumController {
 				}
 			}
 		}
-		
 		
 		tijdsregistraties = tijdsregistratieService.getAllSubmittedTijdsregistratiesByGebruiker(gebruiker, false);
 		model.addAttribute("tijdsregistraties", tijdsregistraties);

@@ -55,35 +55,6 @@ public class KlantController {
         return "redirect:/klanten";
 	}
     
-	/*
-    @RequestMapping(value="/klant",method=RequestMethod.POST)
-	public String klantenAdd(@RequestParam String naam, 
-						@RequestParam String email, @RequestParam String straat, @RequestParam String huisNummer, 
-						@RequestParam String bus, @RequestParam String postcode, @RequestParam String gemeente, 
-						@RequestParam String telefoonNummer, @RequestParam String omschrijving, Model model) {
-        Klant newKlant = new Klant();
-        newKlant.setNaam(naam);
-        newKlant.setEmail(email);
-        
-        Adres klantAdres = new Adres();
-        klantAdres.setStraat(straat);
-        klantAdres.setHuisNummer(huisNummer);
-        klantAdres.setBus(bus);
-        klantAdres.setPostcode(postcode);
-        klantAdres.setGemeente(gemeente);
-        newKlant.setAdres(klantAdres);
-        
-        newKlant.setTelefoonNummer(telefoonNummer);
-        newKlant.setOmschrijving(omschrijving);
-        klantrepo.save(newKlant);
-
-        //model.addAttribute("klant", newKlant);
-        //model.addAttribute("projecten", projectrepo.findAll());
-        return "redirect:/klanten";
-        //return "redirect:/klant/" + newKlant.getId();
-	}
-	*/
-	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping("/klant/{id}")
 	public String klantDetails(@PathVariable Long id, Model model) {

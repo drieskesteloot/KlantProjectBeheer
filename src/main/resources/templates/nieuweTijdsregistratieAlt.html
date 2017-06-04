@@ -4,13 +4,12 @@
 <head> 
     <title th:text="#{msg.tijdsregistratie.database}"></title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
 	
+	<link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>  
    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>  
    	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
-		
+	 	
 </head>
 <body>
 	<div class="container">
@@ -18,7 +17,17 @@
      		<div class="row">
           		<div class="col-lg-6 col-md-7 col-sm-6">
             		<h1 th:text="#{msg.tijdsregistratie.creeerNieuweTijdsregistratie}"></h1>
-					<!-- enctype="multipart/form-data" -->
+					<div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin-top: 16px; margin-bottom: 16px">
+						<div class="btn-group" role="group">
+							<a class="btn btn-default" th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
+						</div>
+						<div class="btn-group" role="group">
+							<a type="button" class="btn btn-default" th:href="@{/mijnProjecten/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnProjecten}"></a>
+			        	</div>
+						<div  class="btn-group" role="group">
+							<a type="button" class="btn btn-default" th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
+			        	</div>
+					</div>
 					<form th:action="@{/tijdsregistratieAlt}" method="post" th:object="${tijdsregistratie}" class="form-horizontal">
             			<fieldset>
 			                 <div class="form-group">
@@ -53,16 +62,6 @@
 			                    	<p th:if="${#fields.hasErrors('datum')}" th:errors="*{datum}" class="alert alert-danger">Fout in de datum</p>
 			                    </div>
 	                		</div>
-	                		
-	                		<!-- 
-	                		<div class="form-group">
-			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.omschrijving} + ':'"></label>
-			                    <div class="col-lg-9">
-			                    	<input id="huidigeGebruiker" type="text" class="form-control" th:value="${huidigeGebruiker.rol}" name="huidigeGebruiker"/>
-			                    </div>
-			                 </div>
-	                		 -->
-	                		
 	                		<div class="form-group">
 			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.omschrijving} + ':'"></label>
 			                    <div class="col-lg-9">
@@ -107,12 +106,15 @@
             		</form>
             	</div>
             </div>
+            <!--  
             <div class="row">
         		<a th:href="@{/mijnTijdsregistraties/{id}(id=${huidigeGebruiker.id})}" th:text="#{msg.mijnTijdregistraties}"></a>
         	</div>
+        	
         	<div class="row">
         		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
         	</div>
+        	-->
 		</div>
 	</div>
 	<script th:inline="javascript">

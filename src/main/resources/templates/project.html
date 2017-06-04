@@ -19,8 +19,7 @@
     	<div class="page-header" id="banner">
         	<div class="row">
           		<div class="col-lg-8 col-md-7 col-sm-6">
-		            <h1 th:text="#{msg.project}"></h1>            
-		            <!-- <form class="form-horizontal" th:action="@{/project/{id}(id=${project.id})}" th:object="${project}" method="post" enctype="multipart/form-data" > -->
+		            <h1 th:text="#{msg.project}"></h1>
 		            <form class="form-horizontal" th:action="@{/projectUpdate/{id}(id=${project.id})}" th:object="${project}" method="post" enctype="multipart/form-data" >
 						<fieldset>
 						<div class="form-group">
@@ -92,16 +91,7 @@
 								<p th:if="${#fields.hasErrors('klant')}" th:errors="*{klant}" class="alert alert-danger">Fout in klant</p>
 							</div>
 	                	</div>
-	                	
-	                	<!-- 
-	                	<div class="form-group">
-			                <label class="col-lg-3 control-label">Klant:</label>
-			                <div class="col-lg-6">
-			                   	<input type="text" class="form-control" th:value="${klant.naam}" name="klantId" disabled="disabled"/>
-			            	</div>
-		                </div>
-		                -->
-		                
+
 		                <div class="form-group">
 			                <label class="col-lg-3 control-label" th:text="#{msg.project.contactPersoonKlant} + ':'"></label>
 			                <div class="col-lg-6">
@@ -129,21 +119,6 @@
 														th:value="${gebruiker.id}"
 														th:text="|${gebruiker.voornaam} ${gebruiker.naam}|"></option>
 										</select>
-					             	
-					             		<!-- 
-					                	<select name="gebruikers" class="form-control" th:field="*{gebruikers}">
-					                		<option th:value="0" ></option>
-											<option th:each="gebruiker : ${gebruikersNormal}"
-													th:value="${gebruiker.id}"
-													th:text="|${gebruiker.voornaam} ${gebruiker.naam}|"></option>
-										</select>
-										 -->
-										<!-- <p th:if="${#fields.hasErrors('klant')}" th:errors="*{klant}" class="alert alert-danger">Fout in klant</p> -->
-										<!-- 
-										<span class="input-group-btn">
-											<button type="submit" class="btn btn-primary" name="projectGebruikerToevoegen" th:text="#{msg.project.gebruikerToevoegen}" value="projectGebruikerToevoegen"></button>
-										</span>
-										-->
 									</div>
 								</div>
 			                </div>

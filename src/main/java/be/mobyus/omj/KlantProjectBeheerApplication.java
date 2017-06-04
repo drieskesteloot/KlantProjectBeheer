@@ -132,7 +132,7 @@ public class KlantProjectBeheerApplication implements CommandLineRunner {
 		tweedeProject.setGebruikers(normalGebruikerAdam);
 		projectrepo.save(tweedeProject);
 		
-		Project derdeProject = new Project("Derde project", fixedPrice, 100000, new Date(), cal.getTime(),
+		Project derdeProject = new Project("Derde project", timeMaterial, 100000, new Date(), cal.getTime(),
 				mobyus, "contact mobyus", bezig);
 		derdeProject.setGebruikers(normalGebruikerAdam2);
 		projectrepo.save(derdeProject);

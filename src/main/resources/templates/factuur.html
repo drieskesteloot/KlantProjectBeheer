@@ -16,19 +16,16 @@
     	<div class="page-header" id="banner">
      		<div class="row">
           		<div class="col-lg-6 col-md-7 col-sm-6">
-            		<h1 th:text="#{msg.factuurProject}"></h1>
-					<form id="form" th:action="@{/factuurProject}" method="post" th:object="${factuur}" class="form-horizontal">
+            		<h1 th:text="#{msg.factuur}"></h1>
+					<!-- enctype="multipart/form-data" -->
+					<form id="form" th:action="@{/factuurBewerk}" method="post" th:object="${factuur}" class="form-horizontal">
             			<fieldset>
-            				<div class="form-group">
-			                	<label class="col-lg-3 control-label" th:text="#{msg.project} + ':'"></label>
-			                    <div class="col-lg-9">
-		                			<select name="project" class="form-control">
-										<option th:each="project : ${hulpProjecten}" 
-											th:value="${project.id}" 
-											th:text="${project.naam}"></option>
-									</select>
-								</div>
-							</div>
+            			<div class="form-group">
+				            	<label class="col-lg-3 control-label" th:text="#{msg.factuur.id} + ':'"></label>
+				                <div class="col-lg-9">
+				                    <input id="factuurId" type="number" class="form-control" th:value="${factuur.id}" th:field="*{id}" step="any"/>
+				                </div>
+		                	</div>
 							<div class="form-group">
 			                	<label class="col-lg-3 control-label" th:text="#{msg.klant} + ':'"></label>
 			                    <div class="col-lg-9">
@@ -92,7 +89,7 @@
 	            </div>
 	        </div>
 			<div class="row">
-        		<a th:href="@{/projecten}" th:text="#{msg.projecten.overzicht}"></a>
+        		<a th:href="@{/facturen}" th:text="#{msg.facturen.overzicht}"></a>
         	</div>
         	<div class="row">
         		<a th:href="@{/beginscherm}" th:text="#{msg.naarBeginscherm}"></a>
@@ -104,6 +101,7 @@
 		$(function() {
 	        $("#datumVerstuur").datepicker({ dateFormat: "yy-mm-dd" });
 	        $("#datumBetaal").datepicker({ dateFormat: "yy-mm-dd" });
+	        $("#factuurId").prop("disabled", true);
 	        $("#subTotaal").prop("disabled", true);
 	        $("#btw").prop("disabled", true);
 	        $("#totaal").prop("disabled", true);

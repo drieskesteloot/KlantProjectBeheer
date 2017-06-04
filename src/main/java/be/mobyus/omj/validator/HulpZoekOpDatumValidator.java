@@ -27,14 +27,12 @@ public class HulpZoekOpDatumValidator implements Validator {
 	    	errors.rejectValue("gebruiker", "project.gebruikerNotNull");
 	    }
 		
-		/*
-		if(object.getStartDatum() == null){
-			errors.rejectValue("startDatum", "project.startDatumNotNull");
-		}
-		if(object.getEindDatum() == null){
-			errors.rejectValue("eindDatum", "project.eindDatumNotNull");
-		}
-		*/
+	    if(object.getStartDatum() != null && object.getEindDatum() == null){
+	    	errors.rejectValue("eindDatum", "tijdsregistratie.startDatumCombEindDatum");
+	    }
+	    if(object.getStartDatum() == null && object.getEindDatum() != null){
+	    	errors.rejectValue("startDatum", "tijdsregistratie.eindDatumCombStartDatum");
+	    }
 		if(object.getStartDatum() != null && object.getEindDatum() != null && object.getStartDatum().after(object.getEindDatum())){
 			errors.rejectValue("startDatum", "project.startDatum");
 		}

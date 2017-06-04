@@ -21,17 +21,6 @@
 					<!-- enctype="multipart/form-data" -->
 					<form th:action="@{/tijdsregistratie}" method="post" th:object="${tijdsregistratie}" class="form-horizontal">
             			<fieldset>
-            				<!-- th:value="${hulpGebruiker.voornaam + ' ' + hulpGebruiker.naam}" -->
-            				<!-- 
-            				<div class="form-group">
-			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.gebruiker} + ':'"></label>
-			                    <div class="col-lg-9">
-			                    	<input type="text" class="form-control" name="gebruiker" th:field="*{gebruiker}" th:value="${hulpGebruiker.id}" th:text="${hulpGebruiker.voornaam + ' ' + hulpGebruiker.naam}" disabled="disabled"/>
-			                    	<p th:if="${#fields.hasErrors('gebruiker')}" th:errors="*{gebruiker}" class="alert alert-danger">Fout in de naam</p>
-			                    </div>
-			                 </div>
-			                 -->
-			                 
 			                 <div class="form-group">
 			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.gebruiker} + ':'"></label>
 			                    <div class="col-lg-9">
@@ -43,18 +32,6 @@
 									<p th:if="${#fields.hasErrors('gebruiker')}" th:errors="*{gebruiker}" class="alert alert-danger">Fout in project</p>
 								</div>
 	                		</div>
-			                 
-			                 <!-- name="project" th:value="${hulpProject.naam}" -->
-			                 <!-- 
-			                 <div class="form-group">
-			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.project} + ':'"></label>
-			                    <div class="col-lg-9">
-			                    	<input type="text" class="form-control" name="project" th:value="${hulpProject.naam}" readonly="readonly"/>
-			                    	<p th:if="${#fields.hasErrors('project')}" th:errors="*{project}" class="alert alert-danger">Fout in project</p>
-			                    </div>
-			                 </div>
-			                 -->
-			                 
 			                 <div class="form-group">
 			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.project} + ':'"></label>
 			                    <div class="col-lg-9">
@@ -74,16 +51,6 @@
 			                    	<p th:if="${#fields.hasErrors('datum')}" th:errors="*{datum}" class="alert alert-danger">Fout in de datum</p>
 			                    </div>
 	                		</div>
-	                		
-	                		<!-- 
-	                		<div class="form-group">
-			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.omschrijving} + ':'"></label>
-			                    <div class="col-lg-9">
-			                    	<input id="huidigeGebruiker" type="text" class="form-control" th:value="${huidigeGebruiker.rol}" name="huidigeGebruiker"/>
-			                    </div>
-			                 </div>
-	                		 -->
-	                		
 	                		<div class="form-group">
 			                    <label class="col-lg-3 control-label" th:text="#{msg.tijdsregistratie.omschrijving} + ':'"></label>
 			                    <div class="col-lg-9">

@@ -18,6 +18,13 @@ public class HomeController {
 		 return "klantprojectbeheer";
 	}
 	
+	@RequestMapping(value="/ajaxTabs",method=RequestMethod.GET)
+	public String ajaxTabs(Model model) {
+		 return "ajaxTabs";
+	}
 	
-
+	@RequestMapping(value="/ajaxTabs2",method=RequestMethod.GET)
+	public String ajaxTabs2(Model model) {
+		 return "ajaxTabs2";
+	}
 }
